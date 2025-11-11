@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import BottomNav from "@/components/BottomNav";
+import bannerImage from "@/assets/rwanda-tourism-banner.jpg";
 
 const Tourism = () => {
   const navigate = useNavigate();
@@ -91,12 +92,22 @@ const Tourism = () => {
 
       <main className="p-4 space-y-6">
         {/* Featured Banner */}
-        <Card className="p-6 bg-gradient-to-br from-green-500/10 to-green-600/5 border-green-500/20">
-          <h3 className="font-semibold text-lg mb-2">🇷🇼 Experience Rwanda</h3>
-          <p className="text-sm text-muted-foreground mb-3">
-            From mountain gorillas to cultural heritage sites
-          </p>
-          <Badge className="bg-green-600 text-white">Featured</Badge>
+        <Card className="relative overflow-hidden border-green-500/20">
+          <div className="absolute inset-0">
+            <img 
+              src={bannerImage} 
+              alt="Rwanda Tourism" 
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/70 to-transparent" />
+          </div>
+          <div className="relative z-10 p-6 text-white">
+            <h3 className="font-semibold text-lg mb-2">🇷🇼 Experience Rwanda</h3>
+            <p className="text-sm text-white/90 mb-3">
+              From mountain gorillas to cultural heritage sites
+            </p>
+            <Badge className="bg-green-600 text-white">Featured</Badge>
+          </div>
         </Card>
 
         {/* Categories */}
