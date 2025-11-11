@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import BottomNav from "@/components/BottomNav";
+import promoBanner from "@/assets/food-promo-banner.jpg";
 
 const Food = () => {
   const navigate = useNavigate();
@@ -92,13 +93,21 @@ const Food = () => {
         </div>
 
         {/* Promo Banner */}
-        <Card className="p-4 bg-gradient-to-r from-gold/10 to-gold/5 border-gold/20">
-          <div className="flex justify-between items-center">
-            <div>
+        <Card className="relative overflow-hidden border-gold/20">
+          <div className="absolute inset-0">
+            <img 
+              src={promoBanner} 
+              alt="Food Delivery Promo" 
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-gold/90 via-gold/70 to-gold/50" />
+          </div>
+          <div className="relative z-10 p-4 flex justify-between items-center">
+            <div className="text-gold-foreground">
               <h3 className="font-semibold mb-1">Free Delivery</h3>
-              <p className="text-sm text-muted-foreground">On orders above RWF 10,000</p>
+              <p className="text-sm opacity-90">On orders above RWF 10,000</p>
             </div>
-            <Badge className="bg-gold text-gold-foreground">Promo</Badge>
+            <Badge className="bg-white text-gold-foreground shadow-md">Promo</Badge>
           </div>
         </Card>
 
