@@ -10,6 +10,8 @@ import hagariRwanda from "@/assets/hagari-rwanda.jpg";
 import imigongoArt from "@/assets/imigongo-art.jpg";
 import akageraCoffee from "@/assets/akagera-coffee.jpg";
 import kitengeFabric from "@/assets/kitenge-fabric.jpg";
+import woodenSculpture from "@/assets/wooden-sculpture.jpg";
+import rwandaHoney from "@/assets/rwanda-honey.jpg";
 
 const Marketplace = () => {
   const navigate = useNavigate();
@@ -48,14 +50,14 @@ const Marketplace = () => {
       category: "Handcrafts",
       price: "RWF 35,000",
       seller: "Azizi Life",
-      image: aziziLife,
+      image: woodenSculpture,
     },
     {
       name: "Honey (500g)",
       category: "Food & Beverage",
       price: "RWF 6,000",
       seller: "Pure Rwanda",
-      image: hagariRwanda,
+      image: rwandaHoney,
     },
   ];
 
