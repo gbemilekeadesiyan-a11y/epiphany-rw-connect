@@ -124,6 +124,24 @@ export default {
             transform: "translateY(0)",
           },
         },
+        "fade-in-out": {
+          "0%, 100%": {
+            opacity: "0.3",
+          },
+          "50%": {
+            opacity: "1",
+          },
+        },
+        "slide-up": {
+          "0%": {
+            opacity: "0",
+            transform: "translateY(30px)",
+          },
+          "100%": {
+            opacity: "1",
+            transform: "translateY(0)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
