@@ -9,6 +9,8 @@ import genocideMemorial from "@/assets/genocide-memorial.jpg";
 import nyamataMemorial from "@/assets/nyamata-memorial.jpg";
 import volcanoesPark from "@/assets/volcanoes-park.jpg";
 import lakeKivuTour from "@/assets/lake-kivu-tour.jpg";
+import inemaArtsCenter from "@/assets/inema-arts-center.jpg";
+import bugeseraLakeResort from "@/assets/bugesera-lake-resort.jpg";
 
 const Tourism = () => {
   const navigate = useNavigate();
@@ -48,7 +50,7 @@ const Tourism = () => {
       price: "RWF 5,000",
       rating: 4.7,
       reviews: 420,
-      image: "🎨",
+      image: inemaArtsCenter,
     },
     {
       title: "Lake Kivu Boat Tour",
@@ -60,13 +62,13 @@ const Tourism = () => {
       image: lakeKivuTour,
     },
     {
-      title: "Traditional Dance Show",
-      category: "Entertainment",
-      duration: "2 hours",
-      price: "RWF 20,000",
-      rating: 4.6,
-      reviews: 310,
-      image: "💃",
+      title: "Bugesera Lake Resort",
+      category: "Accommodation",
+      duration: "Per Night",
+      price: "RWF 100,000",
+      rating: 4.8,
+      reviews: 520,
+      image: bugeseraLakeResort,
     },
   ];
 
@@ -180,6 +182,36 @@ const Tourism = () => {
               {category}
             </Badge>
           ))}
+        </div>
+
+        {/* Hotels Section */}
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <h2 className="font-semibold">Featured Hotels</h2>
+            <Button variant="ghost" size="sm">View All</Button>
+          </div>
+          <div className="grid gap-3">
+            {[
+              { name: "Radisson Blu Hotel Kigali", rating: 4.8, price: "RWF 180,000", amenities: "Pool • Spa • Restaurant" },
+              { name: "Kigali Marriott Hotel", rating: 4.9, price: "RWF 200,000", amenities: "Gym • Bar • Conference" },
+              { name: "Kigali Serena Hotel", rating: 4.7, price: "RWF 175,000", amenities: "Garden • WiFi • Parking" },
+            ].map((hotel, index) => (
+              <Card key={index} className="p-4 hover:shadow-lg transition-all cursor-pointer">
+                <div className="flex items-center justify-between mb-2">
+                  <h3 className="font-semibold">{hotel.name}</h3>
+                  <div className="flex items-center gap-1">
+                    <Star className="h-4 w-4 fill-gold text-gold" />
+                    <span className="text-sm font-medium">{hotel.rating}</span>
+                  </div>
+                </div>
+                <p className="text-xs text-muted-foreground mb-3">{hotel.amenities}</p>
+                <div className="flex items-center justify-between">
+                  <span className="font-semibold text-primary">{hotel.price}/night</span>
+                  <Button size="sm">Book Now</Button>
+                </div>
+              </Card>
+            ))}
+          </div>
         </div>
 
         {/* Experiences Grid */}
