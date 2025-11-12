@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, MapPin, Navigation, Clock, Car, Bike, User, Users, Share2, Route } from "lucide-react";
+import { MapPin, Navigation, Clock, Car, Bike, User, Users, Share2, Route } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import BottomNav from "@/components/BottomNav";
+import AppHeader from "@/components/AppHeader";
 
 const Rides = () => {
   const navigate = useNavigate();
@@ -20,23 +21,7 @@ const Rides = () => {
 
   return (
     <div className="min-h-screen bg-background pb-20">
-      {/* Header */}
-      <header className="bg-primary text-primary-foreground px-4 py-4">
-        <div className="flex items-center gap-3">
-          <Button
-            size="icon"
-            variant="ghost"
-            onClick={() => navigate("/dashboard")}
-            className="text-primary-foreground hover:bg-primary-foreground/10"
-          >
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
-          <div>
-            <h1 className="text-xl font-bold">Book a Ride</h1>
-            <p className="text-sm text-primary-foreground/80">Quick and affordable transport</p>
-          </div>
-        </div>
-      </header>
+      <AppHeader title="Book a Ride" subtitle="Quick and affordable transport" />
 
       <main className="p-4 space-y-6">
         {/* Live Route Preview */}

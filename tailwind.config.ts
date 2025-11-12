@@ -84,6 +84,46 @@ export default {
             height: "0",
           },
         },
+        "slide-in-from-top-left": {
+          "0%": {
+            opacity: "0",
+            transform: "translate(-100%, -100%)",
+          },
+          "100%": {
+            opacity: "1",
+            transform: "translate(0, 0)",
+          },
+        },
+        "slide-in-from-left": {
+          "0%": {
+            opacity: "0",
+            transform: "translateX(-100%)",
+          },
+          "100%": {
+            opacity: "1",
+            transform: "translateX(0)",
+          },
+        },
+        "slide-in-from-right": {
+          "0%": {
+            opacity: "0",
+            transform: "translateX(100%)",
+          },
+          "100%": {
+            opacity: "1",
+            transform: "translateX(0)",
+          },
+        },
+        "slide-in-from-bottom": {
+          "0%": {
+            opacity: "0",
+            transform: "translateY(100%)",
+          },
+          "100%": {
+            opacity: "1",
+            transform: "translateY(0)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",

@@ -1,10 +1,11 @@
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Plus, ArrowUpRight, ArrowDownLeft, CreditCard, Smartphone, Gift, TrendingUp, Users, Send, Percent, Star } from "lucide-react";
+import { Plus, ArrowUpRight, ArrowDownLeft, CreditCard, Smartphone, Gift, TrendingUp, Users, Send, Percent, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import BottomNav from "@/components/BottomNav";
+import AppHeader from "@/components/AppHeader";
 
 const Wallet = () => {
   const navigate = useNavigate();
@@ -42,23 +43,7 @@ const Wallet = () => {
 
   return (
     <div className="min-h-screen bg-background pb-20">
-      {/* Header */}
-      <header className="bg-primary text-primary-foreground px-4 py-4">
-        <div className="flex items-center gap-3">
-          <Button
-            size="icon"
-            variant="ghost"
-            onClick={() => navigate("/dashboard")}
-            className="text-primary-foreground hover:bg-primary-foreground/10"
-          >
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
-          <div>
-            <h1 className="text-xl font-bold">Digital Wallet</h1>
-            <p className="text-sm text-primary-foreground/80">Manage your payments</p>
-          </div>
-        </div>
-      </header>
+      <AppHeader title="Digital Wallet" subtitle="Manage your payments" />
 
       <main className="p-4 space-y-6">
         {/* Balance Card */}

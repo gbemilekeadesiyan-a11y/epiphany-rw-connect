@@ -1,9 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Calendar, MapPin, Music, Trophy, PartyPopper, Clock, Ticket } from "lucide-react";
+import { Calendar, MapPin, Music, Trophy, PartyPopper, Clock, Ticket } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import BottomNav from "@/components/BottomNav";
+import AppHeader from "@/components/AppHeader";
 import bkArena from "@/assets/bk-arena.jpg";
 import amahoroStadium from "@/assets/amahoro-stadium.jpg";
 import centuryCinema from "@/assets/century-cinema.jpg";
@@ -98,23 +99,7 @@ const Events = () => {
 
   return (
     <div className="min-h-screen bg-background pb-20">
-      {/* Header */}
-      <header className="bg-primary text-primary-foreground sticky top-0 z-10">
-        <div className="flex items-center gap-3 px-4 py-4">
-          <Button
-            size="icon"
-            variant="ghost"
-            onClick={() => navigate("/dashboard")}
-            className="text-primary-foreground hover:bg-primary-foreground/10"
-          >
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
-          <div>
-            <h1 className="text-xl font-bold">Events</h1>
-            <p className="text-sm text-primary-foreground/80">Discover & book tickets</p>
-          </div>
-        </div>
-      </header>
+      <AppHeader title="Events" subtitle="Discover & book tickets" />
 
       <main className="px-4 py-6 space-y-6">
         {/* Categories */}

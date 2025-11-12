@@ -1,11 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Search, Star, Clock, MapPin, ChefHat, Package, Bike, CheckCircle, Heart, Gift } from "lucide-react";
+import { Search, Star, Clock, MapPin, ChefHat, Package, Bike, CheckCircle, Heart, Gift } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import BottomNav from "@/components/BottomNav";
+import AppHeader from "@/components/AppHeader";
 import promoBanner from "@/assets/food-promo-banner.jpg";
 
 const Food = () => {
@@ -52,24 +53,7 @@ const Food = () => {
 
   return (
     <div className="min-h-screen bg-background pb-20">
-      {/* Header */}
-      <header className="bg-primary text-primary-foreground px-4 py-4">
-        <div className="flex items-center gap-3 mb-4">
-          <Button
-            size="icon"
-            variant="ghost"
-            onClick={() => navigate("/dashboard")}
-            className="text-primary-foreground hover:bg-primary-foreground/10"
-          >
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
-          <div>
-            <h1 className="text-xl font-bold">Food Delivery</h1>
-            <p className="text-sm text-primary-foreground/80">Delivering to Kigali City</p>
-          </div>
-        </div>
-
-        {/* Search */}
+      <AppHeader title="Food Delivery" subtitle="Delivering to Kigali City">
         <div className="relative">
           <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
           <Input
@@ -77,7 +61,7 @@ const Food = () => {
             className="pl-10 bg-background"
           />
         </div>
-      </header>
+      </AppHeader>
 
       <main className="p-4 space-y-6">
         {/* Categories */}

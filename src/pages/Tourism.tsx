@@ -1,9 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, MapPin, Clock, Users, Star, Calendar, Plus, Sparkles } from "lucide-react";
+import { MapPin, Clock, Users, Star, Calendar, Plus, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import BottomNav from "@/components/BottomNav";
+import AppHeader from "@/components/AppHeader";
 import bannerImage from "@/assets/rwanda-tourism-banner.jpg";
 import genocideMemorial from "@/assets/genocide-memorial.jpg";
 import nyamataMemorial from "@/assets/nyamata-memorial.jpg";
@@ -78,23 +79,7 @@ const Tourism = () => {
 
   return (
     <div className="min-h-screen bg-background pb-20">
-      {/* Header */}
-      <header className="bg-primary text-primary-foreground px-4 py-4">
-        <div className="flex items-center gap-3">
-          <Button
-            size="icon"
-            variant="ghost"
-            onClick={() => navigate("/dashboard")}
-            className="text-primary-foreground hover:bg-primary-foreground/10"
-          >
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
-          <div>
-            <h1 className="text-xl font-bold">Tourism & Experiences</h1>
-            <p className="text-sm text-primary-foreground/80">Discover the beauty of Rwanda</p>
-          </div>
-        </div>
-      </header>
+      <AppHeader title="Tourism & Experiences" subtitle="Discover the beauty of Rwanda" />
 
       <main className="p-4 space-y-6">
         {/* Featured Banner */}

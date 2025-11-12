@@ -1,10 +1,11 @@
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Search, ShoppingCart, Award, Star, TrendingUp } from "lucide-react";
+import { Search, ShoppingCart, Award, Star, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import BottomNav from "@/components/BottomNav";
+import AppHeader from "@/components/AppHeader";
 import aziziLife from "@/assets/azizi-life.jpg";
 import hagariRwanda from "@/assets/hagari-rwanda.jpg";
 import imigongoArt from "@/assets/imigongo-art.jpg";
@@ -67,20 +68,14 @@ const Marketplace = () => {
 
   return (
     <div className="min-h-screen bg-background pb-20">
-      {/* Header */}
-      <header className="bg-primary text-primary-foreground px-4 py-4">
-        <div className="flex items-center gap-3 mb-4">
-          <Button
-            size="icon"
-            variant="ghost"
-            onClick={() => navigate("/dashboard")}
-            className="text-primary-foreground hover:bg-primary-foreground/10"
-          >
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
-          <div className="flex-1">
-            <h1 className="text-xl font-bold">Marketplace</h1>
-            <p className="text-sm text-primary-foreground/80">Support local businesses</p>
+      <AppHeader title="Marketplace" subtitle="Support local businesses">
+        <div className="flex gap-3 items-center">
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+            <Input
+              placeholder="Search products..."
+              className="pl-10 bg-background"
+            />
           </div>
           <Button
             size="icon"
@@ -90,16 +85,7 @@ const Marketplace = () => {
             <ShoppingCart className="h-5 w-5" />
           </Button>
         </div>
-
-        {/* Search */}
-        <div className="relative">
-          <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Search products..."
-            className="pl-10 bg-background"
-          />
-        </div>
-      </header>
+      </AppHeader>
 
       <main className="p-4 space-y-6">
         {/* Categories */}

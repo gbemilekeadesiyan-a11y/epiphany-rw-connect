@@ -1,10 +1,11 @@
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, User, Phone, Mail, MapPin, Star, Settings, HelpCircle, LogOut } from "lucide-react";
+import { User, Phone, Mail, MapPin, Star, Settings, HelpCircle, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import BottomNav from "@/components/BottomNav";
+import AppHeader from "@/components/AppHeader";
 import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 
 const Profile = () => {
@@ -19,23 +20,7 @@ const Profile = () => {
 
   return (
     <div className="min-h-screen bg-background pb-20">
-      {/* Header */}
-      <header className="bg-primary text-primary-foreground px-4 py-4">
-        <div className="flex items-center gap-3">
-          <Button
-            size="icon"
-            variant="ghost"
-            onClick={() => navigate("/dashboard")}
-            className="text-primary-foreground hover:bg-primary-foreground/10"
-          >
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
-          <div>
-            <h1 className="text-xl font-bold">Profile</h1>
-            <p className="text-sm text-primary-foreground/80">Manage your account</p>
-          </div>
-        </div>
-      </header>
+      <AppHeader title="Profile" subtitle="Manage your account" />
 
       <main className="p-4 space-y-6">
         {/* Profile Card */}
