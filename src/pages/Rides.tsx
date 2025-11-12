@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, MapPin, Navigation, Clock, Car, Bike, User } from "lucide-react";
+import { ArrowLeft, MapPin, Navigation, Clock, Car, Bike, User, Users, Share2, Route } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
 import BottomNav from "@/components/BottomNav";
 
 const Rides = () => {
@@ -38,12 +39,32 @@ const Rides = () => {
       </header>
 
       <main className="p-4 space-y-6">
-        {/* Map Placeholder */}
-        <Card className="h-48 bg-muted flex items-center justify-center overflow-hidden">
-          <div className="text-center text-muted-foreground">
-            <MapPin className="h-12 w-12 mx-auto mb-2 opacity-50" />
-            <p className="text-sm">Map view will appear here</p>
-            <p className="text-xs">Live tracking of driver location</p>
+        {/* Live Route Preview */}
+        <Card className="relative h-52 bg-gradient-to-br from-primary/10 to-accent/5 overflow-hidden">
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="text-center text-muted-foreground">
+              <Route className="h-12 w-12 mx-auto mb-2 opacity-50" />
+              <p className="text-sm font-medium">Live Route Preview</p>
+              <p className="text-xs">Real-time driver tracking</p>
+            </div>
+          </div>
+          {/* Trip Sharing Badge */}
+          <div className="absolute top-3 right-3">
+            <Badge className="bg-primary text-primary-foreground flex items-center gap-1">
+              <Share2 className="h-3 w-3" />
+              Trip Shared
+            </Badge>
+          </div>
+          {/* Mode Switch Bar */}
+          <div className="absolute bottom-3 left-3 right-3 flex gap-2">
+            <Button size="sm" variant="secondary" className="flex-1 h-8">
+              <Car className="h-3 w-3 mr-1" />
+              Switch to Car
+            </Button>
+            <Button size="sm" variant="outline" className="flex-1 h-8">
+              <Users className="h-3 w-3 mr-1" />
+              Share Ride
+            </Button>
           </div>
         </Card>
 

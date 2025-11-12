@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, MapPin, Clock, Users, Star } from "lucide-react";
+import { ArrowLeft, MapPin, Clock, Users, Star, Calendar, Plus, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -107,6 +107,61 @@ const Tourism = () => {
               From mountain gorillas to cultural heritage sites
             </p>
             <Badge className="bg-green-600 text-white">Featured</Badge>
+          </div>
+        </Card>
+
+        {/* Curated Itineraries */}
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <h2 className="font-semibold">Curated Itineraries</h2>
+            <Button variant="ghost" size="sm">View All</Button>
+          </div>
+          <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
+            <Card className="min-w-[280px] p-4 bg-gradient-to-br from-primary/10 to-accent/5 cursor-pointer hover:shadow-lg transition-all">
+              <div className="flex items-center gap-2 mb-3">
+                <Sparkles className="h-5 w-5 text-primary" />
+                <Badge className="bg-primary text-primary-foreground">Popular</Badge>
+              </div>
+              <h3 className="font-semibold mb-2">3-Day Cultural Journey</h3>
+              <p className="text-sm text-muted-foreground mb-3">Kigali memorials, Inema Arts, Traditional dance</p>
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-semibold text-primary">RWF 180,000</span>
+                <Button size="sm">View Details</Button>
+              </div>
+            </Card>
+            <Card className="min-w-[280px] p-4 bg-gradient-to-br from-accent/10 to-primary/5 cursor-pointer hover:shadow-lg transition-all">
+              <div className="flex items-center gap-2 mb-3">
+                <Calendar className="h-5 w-5 text-accent" />
+                <Badge className="bg-accent text-accent-foreground">Weekend</Badge>
+              </div>
+              <h3 className="font-semibold mb-2">Lake Kivu Escape</h3>
+              <p className="text-sm text-muted-foreground mb-3">Boat tours, beach activities, local cuisine</p>
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-semibold text-primary">RWF 120,000</span>
+                <Button size="sm">View Details</Button>
+              </div>
+            </Card>
+          </div>
+        </div>
+
+        {/* Custom Itinerary Maker */}
+        <Card className="p-4 bg-gradient-to-r from-gold/10 to-gold/5 border-gold/20">
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-2">
+              <Plus className="h-5 w-5 text-gold" />
+              <div>
+                <h3 className="font-semibold">Create Your Journey</h3>
+                <p className="text-xs text-muted-foreground">Build a custom itinerary</p>
+              </div>
+            </div>
+            <Button size="sm" className="bg-gold text-gold-foreground hover:bg-gold/90">
+              Start Planning
+            </Button>
+          </div>
+          <div className="flex gap-2 mt-3">
+            <Badge variant="outline" className="text-xs">Mix & Match</Badge>
+            <Badge variant="outline" className="text-xs">Flexible Dates</Badge>
+            <Badge variant="outline" className="text-xs">Expert Tips</Badge>
           </div>
         </Card>
 

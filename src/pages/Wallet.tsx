@@ -1,8 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Plus, ArrowUpRight, ArrowDownLeft, CreditCard, Smartphone } from "lucide-react";
+import { ArrowLeft, Plus, ArrowUpRight, ArrowDownLeft, CreditCard, Smartphone, Gift, TrendingUp, Users, Send, Percent, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
 import BottomNav from "@/components/BottomNav";
 
 const Wallet = () => {
@@ -83,9 +84,99 @@ const Wallet = () => {
                 <ArrowUpRight className="h-4 w-4 mr-2" />
                 Send
               </Button>
+              <Button
+                size="sm"
+                className="flex-1 bg-white/20 hover:bg-white/30 text-gold-foreground border-0"
+              >
+                <Users className="h-4 w-4 mr-2" />
+                Split
+              </Button>
             </div>
           </div>
         </Card>
+
+        {/* Loyalty Points */}
+        <Card className="p-4 bg-gradient-to-br from-primary/10 to-accent/10 border-primary/20">
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-2">
+              <div className="p-2 bg-accent/20 rounded-lg">
+                <Star className="h-4 w-4 text-accent" />
+              </div>
+              <div>
+                <h3 className="font-semibold">Loyalty Points</h3>
+                <p className="text-xs text-muted-foreground">Community Rewards</p>
+              </div>
+            </div>
+            <div className="text-right">
+              <p className="text-2xl font-bold text-primary">1,250</p>
+              <p className="text-xs text-muted-foreground">points</p>
+            </div>
+          </div>
+          <Progress value={62} className="h-2 mb-2" />
+          <p className="text-xs text-muted-foreground">750 points to next reward tier</p>
+        </Card>
+
+        {/* Spending Insights */}
+        <Card className="p-4">
+          <div className="flex items-center gap-2 mb-4">
+            <TrendingUp className="h-5 w-5 text-primary" />
+            <h3 className="font-semibold">This Month's Insights</h3>
+          </div>
+          <div className="grid grid-cols-3 gap-3 mb-4">
+            <div className="text-center p-3 bg-muted/50 rounded-lg">
+              <p className="text-xs text-muted-foreground mb-1">Rides</p>
+              <p className="font-bold text-primary">45%</p>
+            </div>
+            <div className="text-center p-3 bg-muted/50 rounded-lg">
+              <p className="text-xs text-muted-foreground mb-1">Food</p>
+              <p className="font-bold text-accent">30%</p>
+            </div>
+            <div className="text-center p-3 bg-muted/50 rounded-lg">
+              <p className="text-xs text-muted-foreground mb-1">Tourism</p>
+              <p className="font-bold text-secondary-foreground">25%</p>
+            </div>
+          </div>
+          <p className="text-xs text-muted-foreground">You spent RWF 82,500 this month</p>
+        </Card>
+
+        {/* Active Promos */}
+        <Card className="p-4 bg-gradient-to-r from-accent/10 to-accent/5 border-accent/20">
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-2">
+              <Percent className="h-5 w-5 text-accent" />
+              <h3 className="font-semibold">Active Promos</h3>
+            </div>
+            <Badge className="bg-accent text-accent-foreground">3 Available</Badge>
+          </div>
+          <div className="space-y-2">
+            <div className="flex items-center justify-between text-sm">
+              <span>20% off next ride</span>
+              <Badge variant="outline" className="text-xs">Use Now</Badge>
+            </div>
+            <div className="flex items-center justify-between text-sm">
+              <span>Free delivery over RWF 15k</span>
+              <Badge variant="outline" className="text-xs">Use Now</Badge>
+            </div>
+          </div>
+        </Card>
+
+        {/* Quick Actions */}
+        <div className="grid grid-cols-2 gap-3">
+          <Card className="p-4 text-center cursor-pointer hover:shadow-lg transition-all">
+            <div className="p-3 bg-primary/10 rounded-lg inline-flex mb-2">
+              <Send className="h-5 w-5 text-primary" />
+            </div>
+            <p className="font-medium text-sm">Send Money</p>
+            <p className="text-xs text-muted-foreground">Remittances</p>
+          </Card>
+          <Card className="p-4 text-center cursor-pointer hover:shadow-lg transition-all">
+            <div className="p-3 bg-accent/10 rounded-lg inline-flex mb-2">
+              <Gift className="h-5 w-5 text-accent" />
+            </div>
+            <p className="font-medium text-sm">Redeem</p>
+            <p className="text-xs text-muted-foreground">Use Points</p>
+          </Card>
+        </div>
 
         {/* Payment Methods */}
         <div className="space-y-3">

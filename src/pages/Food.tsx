@@ -1,9 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Search, Star, Clock, MapPin } from "lucide-react";
+import { ArrowLeft, Search, Star, Clock, MapPin, ChefHat, Package, Bike, CheckCircle, Heart, Gift } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
 import BottomNav from "@/components/BottomNav";
 import promoBanner from "@/assets/food-promo-banner.jpg";
 
@@ -91,6 +92,67 @@ const Food = () => {
             </Badge>
           ))}
         </div>
+
+        {/* Delivery Tracker */}
+        <Card className="p-4 bg-gradient-to-br from-primary/5 to-accent/5">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="font-semibold text-sm">Order in Progress</h3>
+            <Badge variant="outline" className="text-xs">15 min ETA</Badge>
+          </div>
+          <div className="space-y-4">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-primary rounded-full">
+                <ChefHat className="h-4 w-4 text-primary-foreground" />
+              </div>
+              <div className="flex-1">
+                <p className="text-sm font-medium">Preparing</p>
+                <Progress value={100} className="h-1.5 mt-1" />
+              </div>
+              <CheckCircle className="h-4 w-4 text-primary" />
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-primary rounded-full">
+                <Package className="h-4 w-4 text-primary-foreground" />
+              </div>
+              <div className="flex-1">
+                <p className="text-sm font-medium">Ready for Pickup</p>
+                <Progress value={100} className="h-1.5 mt-1" />
+              </div>
+              <CheckCircle className="h-4 w-4 text-primary" />
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-accent rounded-full animate-pulse">
+                <Bike className="h-4 w-4 text-accent-foreground" />
+              </div>
+              <div className="flex-1">
+                <p className="text-sm font-medium">Out for Delivery</p>
+                <Progress value={65} className="h-1.5 mt-1" />
+              </div>
+            </div>
+          </div>
+          <div className="flex gap-2 mt-4">
+            <Button size="sm" variant="outline" className="flex-1">
+              <Heart className="h-3 w-3 mr-1" />
+              Add Tip
+            </Button>
+            <Button size="sm" className="flex-1">Track Rider</Button>
+          </div>
+        </Card>
+
+        {/* Loyalty Rewards */}
+        <Card className="p-4 bg-gradient-to-r from-accent/10 to-accent/5 border-accent/20">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Gift className="h-5 w-5 text-accent" />
+              <div>
+                <h3 className="font-semibold text-sm">Food Rewards</h3>
+                <p className="text-xs text-muted-foreground">2 orders to free delivery</p>
+              </div>
+            </div>
+            <Badge className="bg-accent text-accent-foreground">8/10</Badge>
+          </div>
+          <Progress value={80} className="h-2 mt-3" />
+        </Card>
 
         {/* Promo Banner */}
         <Card className="relative overflow-hidden border-gold/20">

@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Search, ShoppingCart } from "lucide-react";
+import { ArrowLeft, Search, ShoppingCart, Award, Star, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -108,14 +108,60 @@ const Marketplace = () => {
           ))}
         </div>
 
-        {/* Featured Seller */}
-        <Card className="p-4 bg-gradient-to-r from-purple-500/10 to-purple-600/5 border-purple-500/20">
-          <div className="flex justify-between items-center">
-            <div>
-              <h3 className="font-semibold mb-1">Featured Seller</h3>
-              <p className="text-sm text-muted-foreground">Discover authentic Rwandan crafts</p>
+        {/* Maker Spotlight */}
+        <Card className="p-5 bg-gradient-to-br from-gold/10 to-primary/5 border-gold/20">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="p-3 bg-gold/20 rounded-full">
+              <Award className="h-6 w-6 text-gold" />
             </div>
-            <Badge className="bg-purple-600 text-white">Top Rated</Badge>
+            <div className="flex-1">
+              <h3 className="font-bold text-lg">Maker Spotlight</h3>
+              <p className="text-sm text-muted-foreground">Supporting local artisans</p>
+            </div>
+            <Badge className="bg-gold text-gold-foreground">Featured</Badge>
+          </div>
+          
+          <div className="space-y-3">
+            <Card className="p-3 bg-background/50">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center text-2xl">
+                  👨‍🎨
+                </div>
+                <div className="flex-1">
+                  <h4 className="font-semibold text-sm">Kigali Artisans Co-op</h4>
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <div className="flex items-center gap-1">
+                      <Star className="h-3 w-3 fill-gold text-gold" />
+                      <span>4.9</span>
+                    </div>
+                    <span>•</span>
+                    <span>2,400+ sales</span>
+                  </div>
+                </div>
+                <Button size="sm" variant="outline" className="h-7">
+                  View Shop
+                </Button>
+              </div>
+            </Card>
+            
+            <div className="grid grid-cols-3 gap-2">
+              <div className="aspect-square bg-gradient-to-br from-muted to-muted/50 rounded-lg flex items-center justify-center text-3xl">
+                🧺
+              </div>
+              <div className="aspect-square bg-gradient-to-br from-muted to-muted/50 rounded-lg flex items-center justify-center text-3xl">
+                🎨
+              </div>
+              <div className="aspect-square bg-gradient-to-br from-muted to-muted/50 rounded-lg flex items-center justify-center text-3xl">
+                🗿
+              </div>
+            </div>
+            
+            <div className="flex items-center justify-between pt-2">
+              <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                <TrendingUp className="h-3 w-3 text-primary" />
+                <span>Top 3% of sellers this month</span>
+              </div>
+            </div>
           </div>
         </Card>
 
