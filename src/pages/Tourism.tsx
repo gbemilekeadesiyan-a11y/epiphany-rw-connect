@@ -5,6 +5,10 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import BottomNav from "@/components/BottomNav";
 import bannerImage from "@/assets/rwanda-tourism-banner.jpg";
+import genocideMemorial from "@/assets/genocide-memorial.jpg";
+import nyamataMemorial from "@/assets/nyamata-memorial.jpg";
+import volcanoesPark from "@/assets/volcanoes-park.jpg";
+import lakeKivuTour from "@/assets/lake-kivu-tour.jpg";
 
 const Tourism = () => {
   const navigate = useNavigate();
@@ -17,7 +21,7 @@ const Tourism = () => {
       price: "Free",
       rating: 4.9,
       reviews: 1200,
-      image: "🏛️",
+      image: genocideMemorial,
     },
     {
       title: "Nyamata Church Memorial",
@@ -26,7 +30,7 @@ const Tourism = () => {
       price: "RWF 15,000",
       rating: 4.8,
       reviews: 850,
-      image: "⛪",
+      image: nyamataMemorial,
     },
     {
       title: "Volcanoes National Park",
@@ -35,7 +39,7 @@ const Tourism = () => {
       price: "RWF 150,000",
       rating: 5.0,
       reviews: 2100,
-      image: "🦍",
+      image: volcanoesPark,
     },
     {
       title: "Inema Arts Center",
@@ -53,7 +57,7 @@ const Tourism = () => {
       price: "RWF 30,000",
       rating: 4.8,
       reviews: 680,
-      image: "🚤",
+      image: lakeKivuTour,
     },
     {
       title: "Traditional Dance Show",
@@ -185,9 +189,19 @@ const Tourism = () => {
             {experiences.map((experience, index) => (
               <Card key={index} className="overflow-hidden hover:shadow-lg transition-all cursor-pointer">
                 <div className="flex gap-4 p-4">
-                  {/* Image Placeholder */}
-                  <div className="w-24 h-24 bg-gradient-to-br from-primary/10 to-gold/10 rounded-lg flex items-center justify-center flex-shrink-0 text-4xl">
-                    {experience.image}
+                  {/* Image */}
+                  <div className="w-24 h-24 rounded-lg flex items-center justify-center flex-shrink-0 overflow-hidden">
+                    {typeof experience.image === 'string' && experience.image.startsWith('�') ? (
+                      <div className="w-full h-full bg-gradient-to-br from-primary/10 to-gold/10 flex items-center justify-center text-4xl">
+                        {experience.image}
+                      </div>
+                    ) : (
+                      <img 
+                        src={experience.image} 
+                        alt={experience.title}
+                        className="w-full h-full object-cover"
+                      />
+                    )}
                   </div>
 
                   {/* Experience Info */}
