@@ -11,6 +11,7 @@ import Rides from "./pages/Rides";
 import Food from "./pages/Food";
 import Tourism from "./pages/Tourism";
 import Marketplace from "./pages/Marketplace";
+import Events from "./pages/Events";
 import Wallet from "./pages/Wallet";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
@@ -37,6 +38,7 @@ const App = () => {
             <Route path="/food" element={<Food />} />
             <Route path="/tourism" element={<Tourism />} />
             <Route path="/marketplace" element={<Marketplace />} />
+            <Route path="/events" element={<Events />} />
             <Route path="/wallet" element={<Wallet />} />
             <Route path="/profile" element={<Profile />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

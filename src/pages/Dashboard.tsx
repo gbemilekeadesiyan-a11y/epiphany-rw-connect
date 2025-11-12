@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Car, UtensilsCrossed, MapPin, ShoppingBag, Wallet, User, Bell } from "lucide-react";
+import { Car, UtensilsCrossed, MapPin, ShoppingBag, Calendar, Wallet, User, Bell } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import ServiceCard from "@/components/ServiceCard";
@@ -37,6 +37,13 @@ const Dashboard = () => {
       description: "Local products, art & souvenirs",
       color: "bg-purple-500/10 text-purple-700",
       path: "/marketplace",
+    },
+    {
+      icon: Calendar,
+      title: "Events",
+      description: "Concerts, sports & festivals",
+      color: "bg-orange-500/10 text-orange-700",
+      path: "/events",
     },
   ];
 
