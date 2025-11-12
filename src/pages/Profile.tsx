@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import BottomNav from "@/components/BottomNav";
+import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -93,6 +94,9 @@ const Profile = () => {
             <p className="text-xs text-muted-foreground">Experiences</p>
           </Card>
         </div>
+
+        {/* Theme Switcher */}
+        <ThemeSwitcher />
 
         {/* Menu Items */}
         <div className="space-y-2">
