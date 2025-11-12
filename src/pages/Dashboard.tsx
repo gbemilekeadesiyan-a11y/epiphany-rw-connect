@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import ServiceCard from "@/components/ServiceCard";
 import BottomNav from "@/components/BottomNav";
-import heroImage from "@/assets/kigali-hero.jpg";
+import heroImage from "@/assets/kigali-city.jpg";
 
 const Dashboard = () => {
   const navigate = useNavigate();
