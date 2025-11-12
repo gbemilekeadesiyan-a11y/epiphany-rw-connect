@@ -5,52 +5,57 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import BottomNav from "@/components/BottomNav";
+import aziziLife from "@/assets/azizi-life.jpg";
+import hagariRwanda from "@/assets/hagari-rwanda.jpg";
+import imigongoArt from "@/assets/imigongo-art.jpg";
+import akageraCoffee from "@/assets/akagera-coffee.jpg";
+import kitengeFabric from "@/assets/kitenge-fabric.jpg";
 
 const Marketplace = () => {
   const navigate = useNavigate();
 
   const products = [
     {
-      name: "Traditional Basket",
+      name: "Hagari Rwanda",
       category: "Handcrafts",
       price: "RWF 15,000",
-      seller: "Kigali Artisans",
-      image: "🧺",
+      seller: "Hagari Rwanda",
+      image: hagariRwanda,
     },
     {
       name: "Imigongo Art",
       category: "Art",
       price: "RWF 50,000",
       seller: "Rwanda Heritage",
-      image: "🎨",
+      image: imigongoArt,
     },
     {
       name: "Coffee Beans (1kg)",
       category: "Food & Beverage",
       price: "RWF 8,000",
       seller: "Akagera Coffee",
-      image: "☕",
+      image: akageraCoffee,
     },
     {
       name: "Kitenge Fabric",
       category: "Textiles",
       price: "RWF 20,000",
       seller: "Fashion Rwanda",
-      image: "🧵",
+      image: kitengeFabric,
     },
     {
       name: "Wooden Sculpture",
       category: "Handcrafts",
       price: "RWF 35,000",
-      seller: "Kigali Artisans",
-      image: "🗿",
+      seller: "Azizi Life",
+      image: aziziLife,
     },
     {
       name: "Honey (500g)",
       category: "Food & Beverage",
       price: "RWF 6,000",
       seller: "Pure Rwanda",
-      image: "🍯",
+      image: hagariRwanda,
     },
   ];
 
@@ -124,11 +129,15 @@ const Marketplace = () => {
           <div className="space-y-3">
             <Card className="p-3 bg-background/50">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center text-2xl">
-                  👨‍🎨
+                <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0">
+                  <img 
+                    src={aziziLife} 
+                    alt="Azizi Life"
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 <div className="flex-1">
-                  <h4 className="font-semibold text-sm">Kigali Artisans Co-op</h4>
+                  <h4 className="font-semibold text-sm">Azizi Life</h4>
                   <div className="flex items-center gap-2 text-xs text-muted-foreground">
                     <div className="flex items-center gap-1">
                       <Star className="h-3 w-3 fill-gold text-gold" />
@@ -145,14 +154,26 @@ const Marketplace = () => {
             </Card>
             
             <div className="grid grid-cols-3 gap-2">
-              <div className="aspect-square bg-gradient-to-br from-muted to-muted/50 rounded-lg flex items-center justify-center text-3xl">
-                🧺
+              <div className="aspect-square rounded-lg overflow-hidden">
+                <img 
+                  src={hagariRwanda} 
+                  alt="Hagari Rwanda"
+                  className="w-full h-full object-cover"
+                />
               </div>
-              <div className="aspect-square bg-gradient-to-br from-muted to-muted/50 rounded-lg flex items-center justify-center text-3xl">
-                🎨
+              <div className="aspect-square rounded-lg overflow-hidden">
+                <img 
+                  src={imigongoArt} 
+                  alt="Imigongo Art"
+                  className="w-full h-full object-cover"
+                />
               </div>
-              <div className="aspect-square bg-gradient-to-br from-muted to-muted/50 rounded-lg flex items-center justify-center text-3xl">
-                🗿
+              <div className="aspect-square rounded-lg overflow-hidden">
+                <img 
+                  src={aziziLife} 
+                  alt="Azizi Life Products"
+                  className="w-full h-full object-cover"
+                />
               </div>
             </div>
             
@@ -171,8 +192,12 @@ const Marketplace = () => {
           <div className="grid grid-cols-2 gap-4">
             {products.map((product, index) => (
               <Card key={index} className="overflow-hidden hover:shadow-lg transition-all cursor-pointer">
-                <div className="aspect-square bg-gradient-to-br from-muted to-muted/50 flex items-center justify-center text-5xl">
-                  {product.image}
+                <div className="aspect-square overflow-hidden">
+                  <img 
+                    src={product.image} 
+                    alt={product.name}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 <div className="p-3 space-y-2">
                   <div>
