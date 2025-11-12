@@ -4,6 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import BottomNav from "@/components/BottomNav";
+import bkArena from "@/assets/bk-arena.jpg";
+import amahoroStadium from "@/assets/amahoro-stadium.jpg";
+import centuryCinema from "@/assets/century-cinema.jpg";
+import genocideMemorial from "@/assets/genocide-memorial.jpg";
 
 const Events = () => {
   const navigate = useNavigate();
@@ -21,10 +25,10 @@ const Events = () => {
       category: "Concert",
       date: "Dec 15, 2025",
       time: "7:00 PM",
-      venue: "Kigali Arena",
+      venue: "BK Arena",
       location: "Remera, Kigali",
       price: "RWF 25,000",
-      image: "🎵",
+      image: bkArena,
       featured: true,
       ticketsLeft: 150,
     },
@@ -33,10 +37,10 @@ const Events = () => {
       category: "Sports",
       date: "Dec 20, 2025",
       time: "3:00 PM",
-      venue: "Kigali Stadium",
+      venue: "Amahoro Stadium",
       location: "Nyamirambo, Kigali",
       price: "RWF 5,000",
-      image: "⚽",
+      image: amahoroStadium,
       featured: true,
       ticketsLeft: 500,
     },
@@ -48,7 +52,7 @@ const Events = () => {
       venue: "Kigali Genocide Memorial",
       location: "Gisozi, Kigali",
       price: "RWF 15,000",
-      image: "🎭",
+      image: genocideMemorial,
       featured: false,
       ticketsLeft: 300,
     },
@@ -60,7 +64,7 @@ const Events = () => {
       venue: "Century Cinema",
       location: "City Center, Kigali",
       price: "RWF 10,000",
-      image: "🎬",
+      image: centuryCinema,
       featured: false,
       ticketsLeft: 200,
     },
@@ -72,7 +76,7 @@ const Events = () => {
       venue: "Amahoro Stadium",
       location: "Remera, Kigali",
       price: "RWF 50,000",
-      image: "🎤",
+      image: amahoroStadium,
       featured: true,
       ticketsLeft: 1000,
     },
@@ -81,10 +85,10 @@ const Events = () => {
       category: "Sports",
       date: "Feb 8, 2026",
       time: "4:00 PM",
-      venue: "Kigali Arena",
+      venue: "BK Arena",
       location: "Remera, Kigali",
       price: "RWF 8,000",
-      image: "🏀",
+      image: bkArena,
       featured: false,
       ticketsLeft: 400,
     },
@@ -140,8 +144,12 @@ const Events = () => {
             {featuredEvents.map((event, index) => (
               <Card key={index} className="p-0 overflow-hidden hover:shadow-lg transition-all cursor-pointer">
                 <div className="flex">
-                  <div className="w-24 h-24 bg-gradient-to-br from-primary/20 to-gold/20 flex items-center justify-center text-4xl">
-                    {event.image}
+                  <div className="w-24 h-24 overflow-hidden flex-shrink-0">
+                    <img 
+                      src={event.image} 
+                      alt={event.venue}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                   <div className="flex-1 p-4">
                     <div className="flex items-start justify-between mb-2">
@@ -183,8 +191,12 @@ const Events = () => {
               <Card key={index} className="p-4 hover:shadow-lg transition-all cursor-pointer">
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex gap-3">
-                    <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-gold/20 rounded-lg flex items-center justify-center text-2xl">
-                      {event.image}
+                    <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
+                      <img 
+                        src={event.image} 
+                        alt={event.venue}
+                        className="w-full h-full object-cover"
+                      />
                     </div>
                     <div>
                       <h3 className="font-semibold mb-1">{event.title}</h3>
