@@ -7,6 +7,7 @@ const navItems = [
   { icon: Car, label: "Rides", path: "/rides" },
   { icon: UtensilsCrossed, label: "Food", path: "/food" },
   { icon: MapPin, label: "Tourism", path: "/tourism" },
+  { icon: ShoppingBag, label: "Market", path: "/marketplace" },
   { icon: Wallet, label: "Wallet", path: "/wallet" },
 ];
 
