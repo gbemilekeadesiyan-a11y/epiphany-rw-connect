@@ -1,213 +1,128 @@
-import { useNavigate } from "react-router-dom";
-import { Search, ShoppingCart, Award, Star, TrendingUp } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import BottomNav from "@/components/BottomNav";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Skeleton } from "@/components/ui/skeleton";
 import AppHeader from "@/components/AppHeader";
-import aziziLife from "@/assets/azizi-life.jpg";
-import hagariRwanda from "@/assets/hagari-rwanda.jpg";
-import imigongoArt from "@/assets/imigongo-art.jpg";
-import akageraCoffee from "@/assets/akagera-coffee.jpg";
-import kitengeFabric from "@/assets/kitenge-fabric.jpg";
-import woodenSculpture from "@/assets/wooden-sculpture.jpg";
-import rwandaHoney from "@/assets/rwanda-honey.jpg";
+import BottomNav from "@/components/BottomNav";
+import { ShoppingBag, MapPin, RefreshCw, ShoppingCart, Search } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+
+interface Product {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  currency: string;
+  category: string;
+  seller_name: string;
+  seller_location: string;
+}
+
+const categoryColors: Record<string, string> = {
+  "Crafts": "bg-amber-500/10 text-amber-700",
+  "Coffee & Tea": "bg-emerald-500/10 text-emerald-700",
+  "Food": "bg-orange-500/10 text-orange-700",
+  "Fabric": "bg-pink-500/10 text-pink-700",
+  "Art": "bg-purple-500/10 text-purple-700",
+  "Jewelry": "bg-cyan-500/10 text-cyan-700",
+};
 
 const Marketplace = () => {
-  const navigate = useNavigate();
+  const { toast } = useToast();
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const products = [
-    {
-      name: "Hagari Rwanda",
-      category: "Handcrafts",
-      price: "RWF 15,000",
-      seller: "Hagari Rwanda",
-      image: hagariRwanda,
-    },
-    {
-      name: "Imigongo Art",
-      category: "Art",
-      price: "RWF 50,000",
-      seller: "Rwanda Heritage",
-      image: imigongoArt,
-    },
-    {
-      name: "Coffee Beans (1kg)",
-      category: "Food & Beverage",
-      price: "RWF 8,000",
-      seller: "Akagera Coffee",
-      image: akageraCoffee,
-    },
-    {
-      name: "Kitenge Fabric",
-      category: "Textiles",
-      price: "RWF 20,000",
-      seller: "Fashion Rwanda",
-      image: kitengeFabric,
-    },
-    {
-      name: "Wooden Sculpture",
-      category: "Handcrafts",
-      price: "RWF 35,000",
-      seller: "Azizi Life",
-      image: woodenSculpture,
-    },
-    {
-      name: "Honey (500g)",
-      category: "Food & Beverage",
-      price: "RWF 6,000",
-      seller: "Pure Rwanda",
-      image: rwandaHoney,
-    },
-  ];
+  const categories = ["Crafts", "Coffee & Tea", "Food", "Fabric", "Art", "Jewelry"];
 
-  const categories = [
-    "All", "Handcrafts", "Art", "Food", "Textiles", "Jewelry"
-  ];
+  const fetchProducts = async () => {
+    const { data, error } = await supabase.from("marketplace_products").select("*").order("created_at", { ascending: false });
+    if (!error) setProducts(data || []);
+    setLoading(false);
+  };
+
+  const refreshContent = async () => {
+    setRefreshing(true);
+    try {
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/fetch-rwanda-content`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}` },
+        body: JSON.stringify({ type: "marketplace" }),
+      });
+      if (!response.ok) throw new Error("Failed");
+      toast({ title: "Products updated!" });
+      await fetchProducts();
+    } catch { toast({ title: "Refresh failed", variant: "destructive" }); }
+    finally { setRefreshing(false); }
+  };
+
+  useEffect(() => { fetchProducts(); }, []);
+
+  const filteredProducts = products.filter((p) => {
+    const matchesCategory = !selectedCategory || p.category === selectedCategory;
+    const matchesSearch = !searchQuery || p.name.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
 
   return (
     <div className="min-h-screen bg-background pb-20">
-      <AppHeader title="Marketplace" subtitle="Support local businesses">
-        <div className="flex gap-3 items-center">
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-            <Input
-              placeholder="Search products..."
-              className="pl-10 bg-background"
-            />
+      <AppHeader title="Marketplace" subtitle="Authentic Rwandan products" showBack={false} showProfile={true}>
+        <div className="mt-4 space-y-3">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input placeholder="Search products..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="pl-10" />
           </div>
-          <Button
-            size="icon"
-            variant="ghost"
-            className="text-primary-foreground hover:bg-primary-foreground/10"
-          >
-            <ShoppingCart className="h-5 w-5" />
-          </Button>
+          <div className="flex items-center justify-between">
+            <p className="text-sm text-muted-foreground">{filteredProducts.length} products</p>
+            <Button variant="ghost" size="sm" onClick={refreshContent} disabled={refreshing} className="gap-2">
+              <RefreshCw className={`h-4 w-4 ${refreshing ? "animate-spin" : ""}`} />{refreshing ? "Updating..." : "Refresh"}
+            </Button>
+          </div>
         </div>
       </AppHeader>
 
-      <main className="p-4 space-y-6">
-        {/* Categories */}
-        <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
-          {categories.map((category) => (
-            <Badge
-              key={category}
-              variant={category === "All" ? "default" : "outline"}
-              className="cursor-pointer whitespace-nowrap"
-            >
-              {category}
-            </Badge>
+      <main className="px-4 py-6">
+        <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
+          <Badge variant={!selectedCategory ? "default" : "outline"} className="cursor-pointer px-4 py-2" onClick={() => setSelectedCategory(null)}>All</Badge>
+          {categories.map((cat) => (
+            <Badge key={cat} variant={selectedCategory === cat ? "default" : "outline"} className="cursor-pointer px-4 py-2" onClick={() => setSelectedCategory(cat)}>{cat}</Badge>
           ))}
         </div>
 
-        {/* Maker Spotlight */}
-        <Card className="p-5 bg-gradient-to-br from-gold/10 to-primary/5 border-gold/20">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-3 bg-gold/20 rounded-full">
-              <Award className="h-6 w-6 text-gold" />
-            </div>
-            <div className="flex-1">
-              <h3 className="font-bold text-lg">Maker Spotlight</h3>
-              <p className="text-sm text-muted-foreground">Supporting local artisans</p>
-            </div>
-            <Badge className="bg-gold text-gold-foreground">Featured</Badge>
-          </div>
-          
-          <div className="space-y-3">
-            <Card className="p-3 bg-background/50">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0">
-                  <img 
-                    src={aziziLife} 
-                    alt="Azizi Life"
-                    className="w-full h-full object-cover"
-                  />
+        {loading ? (
+          <div className="grid grid-cols-2 gap-3">{[1,2,3,4].map((i) => <Skeleton key={i} className="h-56 w-full rounded-2xl" />)}</div>
+        ) : products.length === 0 ? (
+          <Card className="p-8 text-center">
+            <ShoppingBag className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
+            <h3 className="font-semibold mb-2">No products yet</h3>
+            <Button onClick={refreshContent} disabled={refreshing}><RefreshCw className="h-4 w-4 mr-2" />Load Products</Button>
+          </Card>
+        ) : (
+          <div className="grid grid-cols-2 gap-3">
+            {filteredProducts.map((product) => (
+              <Card key={product.id} className="overflow-hidden hover:shadow-lg transition-all">
+                <div className="aspect-square bg-gradient-to-br from-muted/50 to-muted flex items-center justify-center">
+                  <ShoppingBag className="h-12 w-12 text-muted-foreground/50" />
                 </div>
-                <div className="flex-1">
-                  <h4 className="font-semibold text-sm">Azizi Life</h4>
-                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                    <div className="flex items-center gap-1">
-                      <Star className="h-3 w-3 fill-gold text-gold" />
-                      <span>4.9</span>
-                    </div>
-                    <span>•</span>
-                    <span>2,400+ sales</span>
+                <CardContent className="p-3">
+                  <Badge className={`mb-2 text-[10px] ${categoryColors[product.category] || ""}`}>{product.category}</Badge>
+                  <h3 className="font-semibold text-sm line-clamp-2 min-h-[40px]">{product.name}</h3>
+                  <p className="text-xs text-muted-foreground flex items-center gap-1 mt-1"><MapPin className="h-3 w-3" />{product.seller_location}</p>
+                  <div className="flex items-center justify-between mt-3">
+                    <span className="font-bold text-sm">{product.currency} {product.price.toLocaleString()}</span>
+                    <Button size="icon" variant="outline" className="h-8 w-8"><ShoppingCart className="h-4 w-4" /></Button>
                   </div>
-                </div>
-                <Button size="sm" variant="outline" className="h-7">
-                  View Shop
-                </Button>
-              </div>
-            </Card>
-            
-            <div className="grid grid-cols-3 gap-2">
-              <div className="aspect-square rounded-lg overflow-hidden">
-                <img 
-                  src={hagariRwanda} 
-                  alt="Hagari Rwanda"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="aspect-square rounded-lg overflow-hidden">
-                <img 
-                  src={imigongoArt} 
-                  alt="Imigongo Art"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="aspect-square rounded-lg overflow-hidden">
-                <img 
-                  src={aziziLife} 
-                  alt="Azizi Life Products"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </div>
-            
-            <div className="flex items-center justify-between pt-2">
-              <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                <TrendingUp className="h-3 w-3 text-primary" />
-                <span>Top 3% of sellers this month</span>
-              </div>
-            </div>
-          </div>
-        </Card>
-
-        {/* Products Grid */}
-        <div className="space-y-4">
-          <h2 className="font-semibold">Local Products</h2>
-          <div className="grid grid-cols-2 gap-4">
-            {products.map((product, index) => (
-              <Card key={index} className="overflow-hidden hover:shadow-lg transition-all cursor-pointer">
-                <div className="aspect-square overflow-hidden">
-                  <img 
-                    src={product.image} 
-                    alt={product.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="p-3 space-y-2">
-                  <div>
-                    <h3 className="font-semibold text-sm line-clamp-1">{product.name}</h3>
-                    <p className="text-xs text-muted-foreground">{product.seller}</p>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="font-semibold text-primary text-sm">{product.price}</span>
-                    <Badge variant="secondary" className="text-xs">
-                      {product.category}
-                    </Badge>
-                  </div>
-                  <Button size="sm" className="w-full h-8">
-                    Add to Cart
-                  </Button>
-                </div>
+                </CardContent>
               </Card>
             ))}
           </div>
-        </div>
+        )}
       </main>
-
       <BottomNav />
     </div>
   );
