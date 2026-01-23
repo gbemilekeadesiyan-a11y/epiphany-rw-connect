@@ -1,1 +1,4 @@
 project_id = "yobvkgrvqglaomrwopcv"
+
+[functions.fetch-rwanda-content]
+verify_jwt = false

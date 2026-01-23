@@ -1,228 +1,131 @@
-import { useNavigate } from "react-router-dom";
-import { Calendar, MapPin, Music, Trophy, PartyPopper, Clock, Ticket } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import BottomNav from "@/components/BottomNav";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Skeleton } from "@/components/ui/skeleton";
 import AppHeader from "@/components/AppHeader";
-import bkArena from "@/assets/bk-arena.jpg";
-import amahoroStadium from "@/assets/amahoro-stadium.jpg";
-import centuryCinema from "@/assets/century-cinema.jpg";
-import genocideMemorial from "@/assets/genocide-memorial.jpg";
+import BottomNav from "@/components/BottomNav";
+import { Calendar, MapPin, Ticket, RefreshCw, Clock } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+
+interface Event {
+  id: string;
+  title: string;
+  description: string;
+  date: string;
+  venue: string;
+  location: string;
+  price: string;
+  category: string;
+  is_featured: boolean;
+}
+
+const categoryColors: Record<string, string> = {
+  "Music": "bg-pink-500/10 text-pink-700 dark:text-pink-400",
+  "Sports": "bg-green-500/10 text-green-700 dark:text-green-400",
+  "Culture": "bg-amber-500/10 text-amber-700 dark:text-amber-400",
+  "Business": "bg-blue-500/10 text-blue-700 dark:text-blue-400",
+  "Art": "bg-purple-500/10 text-purple-700 dark:text-purple-400",
+};
 
 const Events = () => {
-  const navigate = useNavigate();
+  const { toast } = useToast();
+  const [events, setEvents] = useState<Event[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
-  const categories = [
-    { name: "All", icon: Calendar },
-    { name: "Concerts", icon: Music },
-    { name: "Sports", icon: Trophy },
-    { name: "Festivals", icon: PartyPopper },
-  ];
+  const categories = ["Music", "Sports", "Culture", "Business", "Art"];
 
-  const events = [
-    {
-      title: "Kigali Jazz Junction",
-      category: "Concert",
-      date: "Dec 15, 2025",
-      time: "7:00 PM",
-      venue: "BK Arena",
-      location: "Remera, Kigali",
-      price: "RWF 25,000",
-      image: bkArena,
-      featured: true,
-      ticketsLeft: 150,
-    },
-    {
-      title: "APR FC vs Rayon Sports",
-      category: "Sports",
-      date: "Dec 20, 2025",
-      time: "3:00 PM",
-      venue: "Amahoro Stadium",
-      location: "Nyamirambo, Kigali",
-      price: "RWF 5,000",
-      image: amahoroStadium,
-      featured: true,
-      ticketsLeft: 500,
-    },
-    {
-      title: "Ubumuntu Arts Festival",
-      category: "Festival",
-      date: "Jan 5-7, 2026",
-      time: "All Day",
-      venue: "Kigali Genocide Memorial",
-      location: "Gisozi, Kigali",
-      price: "RWF 15,000",
-      image: genocideMemorial,
-      featured: false,
-      ticketsLeft: 300,
-    },
-    {
-      title: "Rwanda Film Festival",
-      category: "Festival",
-      date: "Jan 12-14, 2026",
-      time: "6:00 PM",
-      venue: "Century Cinema",
-      location: "City Center, Kigali",
-      price: "RWF 10,000",
-      image: centuryCinema,
-      featured: false,
-      ticketsLeft: 200,
-    },
-    {
-      title: "Kigali Up Music Festival",
-      category: "Concert",
-      date: "Feb 1, 2026",
-      time: "5:00 PM",
-      venue: "Amahoro Stadium",
-      location: "Remera, Kigali",
-      price: "RWF 50,000",
-      image: amahoroStadium,
-      featured: true,
-      ticketsLeft: 1000,
-    },
-    {
-      title: "Basketball Championship Finals",
-      category: "Sports",
-      date: "Feb 8, 2026",
-      time: "4:00 PM",
-      venue: "BK Arena",
-      location: "Remera, Kigali",
-      price: "RWF 8,000",
-      image: bkArena,
-      featured: false,
-      ticketsLeft: 400,
-    },
-  ];
+  const fetchEvents = async () => {
+    const { data, error } = await supabase.from("events").select("*").order("date", { ascending: true });
+    if (!error) setEvents(data || []);
+    setLoading(false);
+  };
 
-  const featuredEvents = events.filter((event) => event.featured);
+  const refreshContent = async () => {
+    setRefreshing(true);
+    try {
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/fetch-rwanda-content`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}` },
+        body: JSON.stringify({ type: "events" }),
+      });
+      if (!response.ok) throw new Error("Failed to refresh");
+      toast({ title: "Events updated!", description: "Latest events loaded." });
+      await fetchEvents();
+    } catch (error) {
+      toast({ title: "Refresh failed", variant: "destructive" });
+    } finally {
+      setRefreshing(false);
+    }
+  };
+
+  useEffect(() => { fetchEvents(); }, []);
+
+  const filteredEvents = selectedCategory ? events.filter((e) => e.category === selectedCategory) : events;
+  const formatDate = (dateStr: string) => {
+    const date = new Date(dateStr);
+    return { day: date.getDate(), month: date.toLocaleDateString("en-US", { month: "short" }) };
+  };
 
   return (
     <div className="min-h-screen bg-background pb-20">
-      <AppHeader title="Events" subtitle="Discover & book tickets" />
+      <AppHeader title="Events" subtitle="Concerts, sports & festivals" showBack={false} showProfile={true}>
+        <div className="flex items-center justify-between mt-4">
+          <p className="text-sm text-muted-foreground">{filteredEvents.length} events</p>
+          <Button variant="ghost" size="sm" onClick={refreshContent} disabled={refreshing} className="gap-2">
+            <RefreshCw className={`h-4 w-4 ${refreshing ? "animate-spin" : ""}`} />
+            {refreshing ? "Updating..." : "Refresh"}
+          </Button>
+        </div>
+      </AppHeader>
 
-      <main className="px-4 py-6 space-y-6">
-        {/* Categories */}
-        <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
-          {categories.map((category) => {
-            const Icon = category.icon;
-            return (
-              <Badge
-                key={category.name}
-                variant="secondary"
-                className="cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors whitespace-nowrap px-4 py-2"
-              >
-                <Icon className="h-4 w-4 mr-1" />
-                {category.name}
-              </Badge>
-            );
-          })}
+      <main className="px-4 py-6">
+        <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
+          <Badge variant={!selectedCategory ? "default" : "outline"} className="cursor-pointer px-4 py-2" onClick={() => setSelectedCategory(null)}>All</Badge>
+          {categories.map((cat) => (
+            <Badge key={cat} variant={selectedCategory === cat ? "default" : "outline"} className="cursor-pointer px-4 py-2" onClick={() => setSelectedCategory(cat)}>{cat}</Badge>
+          ))}
         </div>
 
-        {/* Featured Events */}
-        <div className="space-y-3">
-          <div className="flex items-center justify-between">
-            <h2 className="font-semibold text-lg">Featured Events</h2>
-            <Button variant="ghost" size="sm">View All</Button>
-          </div>
+        {loading ? (
+          <div className="space-y-4">{[1,2,3].map((i) => <Skeleton key={i} className="h-32 w-full rounded-2xl" />)}</div>
+        ) : events.length === 0 ? (
+          <Card className="p-8 text-center">
+            <Calendar className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
+            <h3 className="font-semibold mb-2">No events yet</h3>
+            <Button onClick={refreshContent} disabled={refreshing}><RefreshCw className="h-4 w-4 mr-2" />Load Events</Button>
+          </Card>
+        ) : (
           <div className="space-y-3">
-            {featuredEvents.map((event, index) => (
-              <Card key={index} className="p-0 overflow-hidden hover:shadow-lg transition-all cursor-pointer">
-                <div className="flex">
-                  <div className="w-24 h-24 overflow-hidden flex-shrink-0">
-                    <img 
-                      src={event.image} 
-                      alt={event.venue}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div className="flex-1 p-4">
-                    <div className="flex items-start justify-between mb-2">
-                      <div>
-                        <h3 className="font-semibold text-sm mb-1">{event.title}</h3>
-                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                          <Calendar className="h-3 w-3" />
-                          <span>{event.date}</span>
-                          <Clock className="h-3 w-3 ml-1" />
-                          <span>{event.time}</span>
-                        </div>
-                      </div>
-                      <Badge variant="outline" className="text-xs">
-                        {event.category}
-                      </Badge>
+            {filteredEvents.map((event) => {
+              const { day, month } = formatDate(event.date);
+              return (
+                <Card key={event.id} className="overflow-hidden hover:shadow-md transition-all">
+                  <CardContent className="p-4 flex gap-4">
+                    <div className="w-16 h-16 rounded-xl bg-primary/10 flex flex-col items-center justify-center flex-shrink-0">
+                      <p className="text-xl font-bold text-primary">{day}</p>
+                      <p className="text-xs text-muted-foreground">{month}</p>
                     </div>
-                    <div className="flex items-center gap-1 text-xs text-muted-foreground mb-2">
-                      <MapPin className="h-3 w-3" />
-                      <span>{event.venue}</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="font-semibold text-primary">{event.price}</span>
-                      <span className="text-xs text-muted-foreground">
-                        {event.ticketsLeft} tickets left
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </Card>
-            ))}
-          </div>
-        </div>
-
-        {/* All Events */}
-        <div className="space-y-3">
-          <h2 className="font-semibold text-lg">Upcoming Events</h2>
-          <div className="grid gap-3">
-            {events.map((event, index) => (
-              <Card key={index} className="p-4 hover:shadow-lg transition-all cursor-pointer">
-                <div className="flex items-start justify-between mb-3">
-                  <div className="flex gap-3">
-                    <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
-                      <img 
-                        src={event.image} 
-                        alt={event.venue}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold mb-1">{event.title}</h3>
-                      <Badge variant="outline" className="text-xs mb-2">
-                        {event.category}
-                      </Badge>
-                      <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                        <Calendar className="h-3 w-3" />
-                        <span>{event.date}</span>
+                    <div className="flex-1 min-w-0">
+                      <Badge className={`mb-1 text-xs ${categoryColors[event.category] || ""}`}>{event.category}</Badge>
+                      <h3 className="font-semibold line-clamp-1">{event.title}</h3>
+                      <p className="text-xs text-muted-foreground flex items-center gap-1 mt-1"><MapPin className="h-3 w-3" />{event.venue}</p>
+                      <div className="flex items-center justify-between mt-2">
+                        <span className="text-sm font-semibold">{event.price}</span>
+                        <Button size="sm" variant="outline" className="h-7 text-xs gap-1"><Ticket className="h-3 w-3" />Book</Button>
                       </div>
                     </div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-1 text-xs text-muted-foreground mb-3">
-                  <MapPin className="h-3 w-3" />
-                  <span>{event.venue}, {event.location}</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <span className="font-semibold text-primary block">{event.price}</span>
-                    <span className="text-xs text-muted-foreground">
-                      {event.ticketsLeft} left
-                    </span>
-                  </div>
-                  <div className="flex gap-2">
-                    <Button size="sm" variant="outline">
-                      <MapPin className="h-4 w-4" />
-                      Directions
-                    </Button>
-                    <Button size="sm">
-                      <Ticket className="h-4 w-4 mr-1" />
-                      Buy Ticket
-                    </Button>
-                  </div>
-                </div>
-              </Card>
-            ))}
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
-        </div>
+        )}
       </main>
-
       <BottomNav />
     </div>
   );
