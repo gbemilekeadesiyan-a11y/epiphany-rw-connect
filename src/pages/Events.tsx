@@ -9,6 +9,7 @@ import AppHeader from "@/components/AppHeader";
 import BottomNav from "@/components/BottomNav";
 import { Calendar, MapPin, Ticket, RefreshCw, Clock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import eventsBanner from "@/assets/section-events.jpg";
 
 interface Event {
   id: string;
@@ -84,6 +85,15 @@ const Events = () => {
       </AppHeader>
 
       <main className="px-4 py-6">
+        <div className="relative h-40 rounded-2xl overflow-hidden mb-6 shadow-lg">
+          <img src={eventsBanner} alt="Live events in Rwanda" loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/40 to-transparent" />
+          <div className="relative z-10 h-full flex flex-col justify-end p-5 text-white">
+            <span className="text-xs uppercase tracking-widest text-gold font-semibold mb-1">Trending now</span>
+            <h2 className="text-xl font-bold">Live in Rwanda</h2>
+            <p className="text-xs text-white/80">Concerts · Sports · Culture · Updated by AI</p>
+          </div>
+        </div>
         <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
           <Badge variant={!selectedCategory ? "default" : "outline"} className="cursor-pointer px-4 py-2" onClick={() => setSelectedCategory(null)}>All</Badge>
           {categories.map((cat) => (

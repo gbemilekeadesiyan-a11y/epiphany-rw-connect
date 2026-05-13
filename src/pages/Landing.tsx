@@ -14,6 +14,12 @@ import {
 import SiteNav from "@/components/SiteNav";
 import CTAButton from "@/components/CTAButton";
 import EpiphanyLogo from "@/components/EpiphanyLogo";
+import heroImg from "@/assets/landing-hero.jpg";
+import tourismImg from "@/assets/section-tourism.jpg";
+import marketplaceImg from "@/assets/section-marketplace.jpg";
+import eventsImg from "@/assets/section-events.jpg";
+import articlesImg from "@/assets/section-articles.jpg";
+import aiPattern from "@/assets/ai-pattern.jpg";
 
 const services = [
   {
@@ -21,24 +27,28 @@ const services = [
     icon: MapPin,
     title: "Tourism & Activities",
     desc: "AI-curated itineraries, hotel bookings, gorilla treks, and the heart of Rwanda's landscapes.",
+    image: tourismImg,
   },
   {
     id: "marketplace",
     icon: ShoppingBag,
     title: "Rwandan Marketplace",
     desc: "From Kigali makers to coffee growers — buy authentic Rwandan products in RWF.",
+    image: marketplaceImg,
   },
   {
     id: "events",
     icon: Calendar,
     title: "Live Events",
     desc: "Real-time, AI-sourced events happening across Rwanda. Book tickets and get directions.",
+    image: eventsImg,
   },
   {
     id: "articles",
     icon: Newspaper,
     title: "Articles & Stories",
     desc: "News, travel guides, business insights, and culture — auto-updated daily.",
+    image: articlesImg,
   },
 ];
 
@@ -70,10 +80,14 @@ const Landing = () => {
 
       {/* HERO */}
       <section className="relative min-h-screen flex items-center justify-center pt-24 pb-20 overflow-hidden">
-        {/* Animated gradient background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary to-primary/70" />
+        {/* Cinematic image background */}
+        <div className="absolute inset-0">
+          <img src={heroImg} alt="Kigali skyline at golden hour" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-b from-primary/80 via-primary/70 to-primary" />
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-transparent to-primary/60" />
+        </div>
         <div
-          className="absolute inset-0 opacity-[0.07]"
+          className="absolute inset-0 opacity-[0.06] mix-blend-overlay"
           style={{
             backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 35px, hsl(var(--gold)) 35px, hsl(var(--gold)) 36px)`,
           }}
@@ -141,15 +155,21 @@ const Landing = () => {
                   {services.map((s, i) => (
                     <div
                       key={s.id}
-                      className="group/card relative rounded-2xl border border-white/10 bg-white/5 p-5 hover:bg-white/10 hover:border-gold/40 transition-all duration-500 hover:-translate-y-2 cursor-pointer animate-[slide-up_0.6s_ease-out]"
+                      className="group/card relative rounded-2xl border border-white/10 bg-white/5 overflow-hidden hover:border-gold/40 transition-all duration-500 hover:-translate-y-2 cursor-pointer animate-[slide-up_0.6s_ease-out]"
                       style={{ animationDelay: `${i * 100}ms` }}
                     >
-                      <div className="w-10 h-10 rounded-xl bg-gold/20 flex items-center justify-center mb-3 group-hover/card:bg-gold group-hover/card:text-gold-foreground transition-colors">
-                        <s.icon className="w-5 h-5 text-gold group-hover/card:text-gold-foreground" />
+                      <div className="relative h-28 overflow-hidden">
+                        <img src={s.image} alt={s.title} loading="lazy" className="absolute inset-0 w-full h-full object-cover group-hover/card:scale-110 transition-transform duration-700" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/40 to-transparent" />
+                        <div className="absolute bottom-2 left-3 w-8 h-8 rounded-lg bg-gold/90 flex items-center justify-center backdrop-blur-sm">
+                          <s.icon className="w-4 h-4 text-gold-foreground" />
+                        </div>
                       </div>
-                      <h3 className="font-semibold mb-1">{s.title}</h3>
-                      <p className="text-xs text-white/60 leading-relaxed">{s.desc}</p>
-                      <ArrowUpRight className="absolute top-4 right-4 w-4 h-4 text-white/30 group-hover/card:text-gold transition-colors" />
+                      <div className="p-4">
+                        <h3 className="font-semibold mb-1 text-sm">{s.title}</h3>
+                        <p className="text-xs text-white/60 leading-relaxed line-clamp-2">{s.desc}</p>
+                      </div>
+                      <ArrowUpRight className="absolute top-3 right-3 w-4 h-4 text-white/70 group-hover/card:text-gold transition-colors" />
                     </div>
                   ))}
                 </div>
@@ -192,16 +212,19 @@ const Landing = () => {
                 <CTAButton>Explore in the App</CTAButton>
               </div>
 
-              <div className="relative aspect-square rounded-3xl overflow-hidden border border-white/10 bg-gradient-to-br from-gold/10 via-transparent to-primary/50 group">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <s.icon className="w-32 h-32 text-gold/40 group-hover:scale-110 group-hover:text-gold/60 transition-all duration-700" />
-                </div>
+              <div className="relative aspect-[4/3] rounded-3xl overflow-hidden border border-white/10 group shadow-2xl">
+                <img src={s.image} alt={s.title} loading="lazy" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-[1200ms]" />
+                <div className="absolute inset-0 bg-gradient-to-tr from-primary/70 via-primary/10 to-transparent" />
                 <div
-                  className="absolute inset-0 opacity-10"
+                  className="absolute inset-0 opacity-10 mix-blend-overlay"
                   style={{
                     backgroundImage: `repeating-linear-gradient(${idx * 30}deg, transparent, transparent 25px, hsl(var(--gold)) 25px, hsl(var(--gold)) 26px)`,
                   }}
                 />
+                <div className="absolute bottom-5 left-5 flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/20">
+                  <div className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" />
+                  <span className="text-xs text-white/90 font-medium">{s.title}</span>
+                </div>
               </div>
             </div>
           </div>
@@ -209,8 +232,12 @@ const Landing = () => {
       ))}
 
       {/* FEATURES GRID */}
-      <section className="py-24 bg-primary">
-        <div className="container mx-auto px-4">
+      <section className="relative py-24 bg-primary overflow-hidden">
+        <div className="absolute inset-0 opacity-30">
+          <img src={aiPattern} alt="" loading="lazy" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-b from-primary via-primary/70 to-primary" />
+        </div>
+        <div className="relative container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl sm:text-5xl font-bold mb-4">Built different.</h2>
             <p className="text-white/70 max-w-2xl mx-auto">

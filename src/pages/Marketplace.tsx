@@ -9,6 +9,7 @@ import AppHeader from "@/components/AppHeader";
 import BottomNav from "@/components/BottomNav";
 import { ShoppingBag, MapPin, RefreshCw, ShoppingCart, Search } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import marketImg from "@/assets/section-marketplace.jpg";
 
 interface Product {
   id: string;
@@ -106,8 +107,9 @@ const Marketplace = () => {
           <div className="grid grid-cols-2 gap-3">
             {filteredProducts.map((product) => (
               <Card key={product.id} className="overflow-hidden hover:shadow-lg transition-all">
-                <div className="aspect-square bg-gradient-to-br from-muted/50 to-muted flex items-center justify-center">
-                  <ShoppingBag className="h-12 w-12 text-muted-foreground/50" />
+                <div className="aspect-square overflow-hidden relative bg-muted">
+                  <img src={marketImg} alt={product.name} loading="lazy" className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
                 </div>
                 <CardContent className="p-3">
                   <Badge className={`mb-2 text-[10px] ${categoryColors[product.category] || ""}`}>{product.category}</Badge>
