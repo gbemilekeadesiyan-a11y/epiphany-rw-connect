@@ -14,6 +14,12 @@ import {
 import SiteNav from "@/components/SiteNav";
 import CTAButton from "@/components/CTAButton";
 import EpiphanyLogo from "@/components/EpiphanyLogo";
+import heroImg from "@/assets/landing-hero.jpg";
+import tourismImg from "@/assets/section-tourism.jpg";
+import marketplaceImg from "@/assets/section-marketplace.jpg";
+import eventsImg from "@/assets/section-events.jpg";
+import articlesImg from "@/assets/section-articles.jpg";
+import aiPattern from "@/assets/ai-pattern.jpg";
 
 const services = [
   {
@@ -21,24 +27,28 @@ const services = [
     icon: MapPin,
     title: "Tourism & Activities",
     desc: "AI-curated itineraries, hotel bookings, gorilla treks, and the heart of Rwanda's landscapes.",
+    image: tourismImg,
   },
   {
     id: "marketplace",
     icon: ShoppingBag,
     title: "Rwandan Marketplace",
     desc: "From Kigali makers to coffee growers — buy authentic Rwandan products in RWF.",
+    image: marketplaceImg,
   },
   {
     id: "events",
     icon: Calendar,
     title: "Live Events",
     desc: "Real-time, AI-sourced events happening across Rwanda. Book tickets and get directions.",
+    image: eventsImg,
   },
   {
     id: "articles",
     icon: Newspaper,
     title: "Articles & Stories",
     desc: "News, travel guides, business insights, and culture — auto-updated daily.",
+    image: articlesImg,
   },
 ];
 
