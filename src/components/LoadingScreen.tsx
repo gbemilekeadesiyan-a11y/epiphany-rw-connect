@@ -7,7 +7,7 @@ const LoadingScreen = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       navigate("/welcome");
-    }, 3000);
+    }, 1800);
 
     return () => clearTimeout(timer);
   }, [navigate]);
