@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/hooks/useAuth";
 import LoadingScreen from "./components/LoadingScreen";
+import Landing from "./pages/Landing";
 import Welcome from "./pages/Welcome";
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
@@ -18,10 +19,8 @@ import { Loader2 } from "lucide-react";
 
 const queryClient = new QueryClient();
 
-// Protected route wrapper
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { user, loading } = useAuth();
-
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -29,18 +28,12 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
       </div>
     );
   }
-
-  if (!user) {
-    return <Navigate to="/auth" replace />;
-  }
-
+  if (!user) return <Navigate to="/auth" replace />;
   return <>{children}</>;
 };
 
-// Public route that redirects to dashboard if logged in
 const PublicRoute = ({ children }: { children: React.ReactNode }) => {
   const { user, loading } = useAuth();
-
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -48,18 +41,22 @@ const PublicRoute = ({ children }: { children: React.ReactNode }) => {
       </div>
     );
   }
-
-  if (user) {
-    return <Navigate to="/dashboard" replace />;
-  }
-
+  if (user) return <Navigate to="/dashboard" replace />;
   return <>{children}</>;
 };
 
 const AppRoutes = () => {
   return (
     <Routes>
-      <Route path="/" element={<LoadingScreen />} />
+      {/* Marketing site */}
+      <Route path="/" element={<Landing />} />
+
+      {/* App entry & shareable aliases */}
+      <Route path="/app" element={<LoadingScreen />} />
+      <Route path="/try" element={<Navigate to="/app" replace />} />
+      <Route path="/demo" element={<Navigate to="/app" replace />} />
+      <Route path="/start" element={<Navigate to="/app" replace />} />
+
       <Route path="/welcome" element={<PublicRoute><Welcome /></PublicRoute>} />
       <Route path="/auth" element={<PublicRoute><Auth /></PublicRoute>} />
       <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
