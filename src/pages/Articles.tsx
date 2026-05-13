@@ -9,6 +9,15 @@ import AppHeader from "@/components/AppHeader";
 import BottomNav from "@/components/BottomNav";
 import { BookOpen, TrendingUp, Plane, Briefcase, RefreshCw, Clock, User } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import articlesFallback from "@/assets/section-articles.jpg";
+import travelFallback from "@/assets/section-tourism.jpg";
+import businessFallback from "@/assets/ai-pattern.jpg";
+
+const fallbackByCategory: Record<string, string> = {
+  News: articlesFallback,
+  Travel: travelFallback,
+  Business: businessFallback,
+};
 
 interface Article {
   id: string;
@@ -231,8 +240,14 @@ const Articles = () => {
                 className="overflow-hidden mb-6 cursor-pointer hover:shadow-lg transition-all group"
                 onClick={() => setSelectedArticle(featuredArticle)}
               >
-                <div className="h-48 bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                  <BookOpen className="h-16 w-16 text-primary/50" />
+                <div className="relative h-56 overflow-hidden">
+                  <img
+                    src={featuredArticle.image_url || fallbackByCategory[featuredArticle.category] || articlesFallback}
+                    alt={featuredArticle.title}
+                    loading="lazy"
+                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
                 </div>
                 <CardContent className="p-5">
                   <Badge className={`mb-3 ${categoryColors[featuredArticle.category]}`}>
@@ -264,8 +279,13 @@ const Articles = () => {
                     onClick={() => setSelectedArticle(article)}
                   >
                     <CardContent className="p-4 flex gap-4">
-                      <div className="w-20 h-20 rounded-xl bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center flex-shrink-0">
-                        <Icon className="h-8 w-8 text-primary/50" />
+                      <div className="w-24 h-24 rounded-xl overflow-hidden flex-shrink-0 relative">
+                        <img
+                          src={article.image_url || fallbackByCategory[article.category] || articlesFallback}
+                          alt={article.title}
+                          loading="lazy"
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        />
                       </div>
                       <div className="flex-1 min-w-0">
                         <Badge className={`mb-2 text-xs ${categoryColors[article.category]}`}>
