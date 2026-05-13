@@ -155,15 +155,21 @@ const Landing = () => {
                   {services.map((s, i) => (
                     <div
                       key={s.id}
-                      className="group/card relative rounded-2xl border border-white/10 bg-white/5 p-5 hover:bg-white/10 hover:border-gold/40 transition-all duration-500 hover:-translate-y-2 cursor-pointer animate-[slide-up_0.6s_ease-out]"
+                      className="group/card relative rounded-2xl border border-white/10 bg-white/5 overflow-hidden hover:border-gold/40 transition-all duration-500 hover:-translate-y-2 cursor-pointer animate-[slide-up_0.6s_ease-out]"
                       style={{ animationDelay: `${i * 100}ms` }}
                     >
-                      <div className="w-10 h-10 rounded-xl bg-gold/20 flex items-center justify-center mb-3 group-hover/card:bg-gold group-hover/card:text-gold-foreground transition-colors">
-                        <s.icon className="w-5 h-5 text-gold group-hover/card:text-gold-foreground" />
+                      <div className="relative h-28 overflow-hidden">
+                        <img src={s.image} alt={s.title} loading="lazy" className="absolute inset-0 w-full h-full object-cover group-hover/card:scale-110 transition-transform duration-700" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/40 to-transparent" />
+                        <div className="absolute bottom-2 left-3 w-8 h-8 rounded-lg bg-gold/90 flex items-center justify-center backdrop-blur-sm">
+                          <s.icon className="w-4 h-4 text-gold-foreground" />
+                        </div>
                       </div>
-                      <h3 className="font-semibold mb-1">{s.title}</h3>
-                      <p className="text-xs text-white/60 leading-relaxed">{s.desc}</p>
-                      <ArrowUpRight className="absolute top-4 right-4 w-4 h-4 text-white/30 group-hover/card:text-gold transition-colors" />
+                      <div className="p-4">
+                        <h3 className="font-semibold mb-1 text-sm">{s.title}</h3>
+                        <p className="text-xs text-white/60 leading-relaxed line-clamp-2">{s.desc}</p>
+                      </div>
+                      <ArrowUpRight className="absolute top-3 right-3 w-4 h-4 text-white/70 group-hover/card:text-gold transition-colors" />
                     </div>
                   ))}
                 </div>
