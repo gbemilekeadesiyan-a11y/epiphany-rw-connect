@@ -212,16 +212,19 @@ const Landing = () => {
                 <CTAButton>Explore in the App</CTAButton>
               </div>
 
-              <div className="relative aspect-square rounded-3xl overflow-hidden border border-white/10 bg-gradient-to-br from-gold/10 via-transparent to-primary/50 group">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <s.icon className="w-32 h-32 text-gold/40 group-hover:scale-110 group-hover:text-gold/60 transition-all duration-700" />
-                </div>
+              <div className="relative aspect-[4/3] rounded-3xl overflow-hidden border border-white/10 group shadow-2xl">
+                <img src={s.image} alt={s.title} loading="lazy" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-[1200ms]" />
+                <div className="absolute inset-0 bg-gradient-to-tr from-primary/70 via-primary/10 to-transparent" />
                 <div
-                  className="absolute inset-0 opacity-10"
+                  className="absolute inset-0 opacity-10 mix-blend-overlay"
                   style={{
                     backgroundImage: `repeating-linear-gradient(${idx * 30}deg, transparent, transparent 25px, hsl(var(--gold)) 25px, hsl(var(--gold)) 26px)`,
                   }}
                 />
+                <div className="absolute bottom-5 left-5 flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/20">
+                  <div className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" />
+                  <span className="text-xs text-white/90 font-medium">{s.title}</span>
+                </div>
               </div>
             </div>
           </div>
