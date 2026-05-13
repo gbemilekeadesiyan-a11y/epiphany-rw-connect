@@ -232,8 +232,12 @@ const Landing = () => {
       ))}
 
       {/* FEATURES GRID */}
-      <section className="py-24 bg-primary">
-        <div className="container mx-auto px-4">
+      <section className="relative py-24 bg-primary overflow-hidden">
+        <div className="absolute inset-0 opacity-30">
+          <img src={aiPattern} alt="" loading="lazy" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-b from-primary via-primary/70 to-primary" />
+        </div>
+        <div className="relative container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl sm:text-5xl font-bold mb-4">Built different.</h2>
             <p className="text-white/70 max-w-2xl mx-auto">
