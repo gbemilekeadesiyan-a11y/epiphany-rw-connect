@@ -80,10 +80,14 @@ const Landing = () => {
 
       {/* HERO */}
       <section className="relative min-h-screen flex items-center justify-center pt-24 pb-20 overflow-hidden">
-        {/* Animated gradient background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary to-primary/70" />
+        {/* Cinematic image background */}
+        <div className="absolute inset-0">
+          <img src={heroImg} alt="Kigali skyline at golden hour" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-b from-primary/80 via-primary/70 to-primary" />
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-transparent to-primary/60" />
+        </div>
         <div
-          className="absolute inset-0 opacity-[0.07]"
+          className="absolute inset-0 opacity-[0.06] mix-blend-overlay"
           style={{
             backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 35px, hsl(var(--gold)) 35px, hsl(var(--gold)) 36px)`,
           }}
