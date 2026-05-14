@@ -14,12 +14,11 @@ import {
 import SiteNav from "@/components/SiteNav";
 import CTAButton from "@/components/CTAButton";
 import EpiphanyLogo from "@/components/EpiphanyLogo";
-import heroImg from "@/assets/landing-hero.jpg";
-import tourismImg from "@/assets/section-tourism.jpg";
-import marketplaceImg from "@/assets/section-marketplace.jpg";
-import eventsImg from "@/assets/section-events.jpg";
-import articlesImg from "@/assets/section-articles.jpg";
-import aiPattern from "@/assets/ai-pattern.jpg";
+import heroImg from "@/assets/photos/hero-kigali.jpg";
+import tourismImg from "@/assets/photos/tourism-rwanda.jpg";
+import marketplaceImg from "@/assets/photos/marketplace-rwanda.jpg";
+import eventsImg from "@/assets/photos/events-rwanda.jpg";
+import articlesImg from "@/assets/photos/articles-rwanda.jpg";
 
 const services = [
   {
@@ -233,10 +232,9 @@ const Landing = () => {
 
       {/* FEATURES GRID */}
       <section className="relative py-24 bg-primary overflow-hidden">
-        <div className="absolute inset-0 opacity-30">
-          <img src={aiPattern} alt="" loading="lazy" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-b from-primary via-primary/70 to-primary" />
-        </div>
+        <div className="absolute inset-0 opacity-[0.04]" style={{
+          backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 35px, hsl(var(--gold)) 35px, hsl(var(--gold)) 36px)`,
+        }} />
         <div className="relative container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl sm:text-5xl font-bold mb-4">Built different.</h2>

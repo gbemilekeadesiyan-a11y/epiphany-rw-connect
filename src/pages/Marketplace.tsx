@@ -9,7 +9,7 @@ import AppHeader from "@/components/AppHeader";
 import BottomNav from "@/components/BottomNav";
 import { ShoppingBag, MapPin, RefreshCw, ShoppingCart, Search } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import marketImg from "@/assets/section-marketplace.jpg";
+
 
 interface Product {
   id: string;
@@ -106,15 +106,17 @@ const Marketplace = () => {
         ) : (
           <div className="grid grid-cols-2 gap-3">
             {filteredProducts.map((product) => (
-              <Card key={product.id} className="overflow-hidden hover:shadow-lg transition-all">
-                <div className="aspect-square overflow-hidden relative bg-muted">
-                  <img src={marketImg} alt={product.name} loading="lazy" className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+              <Card key={product.id} className="overflow-hidden hover:shadow-lg hover:border-primary/30 transition-all flex flex-col">
+                <div className="aspect-square relative bg-gradient-to-br from-secondary via-background to-secondary flex items-center justify-center p-4">
+                  <ShoppingBag className="h-10 w-10 text-primary/30 absolute top-3 right-3" />
+                  <div className="text-center">
+                    <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1">{product.category}</p>
+                    <p className="font-bold text-base line-clamp-3 leading-tight">{product.name}</p>
+                  </div>
                 </div>
-                <CardContent className="p-3">
-                  <Badge className={`mb-2 text-[10px] ${categoryColors[product.category] || ""}`}>{product.category}</Badge>
-                  <h3 className="font-semibold text-sm line-clamp-2 min-h-[40px]">{product.name}</h3>
-                  <p className="text-xs text-muted-foreground flex items-center gap-1 mt-1"><MapPin className="h-3 w-3" />{product.seller_location}</p>
+                <CardContent className="p-3 flex-1 flex flex-col">
+                  <p className="text-xs text-muted-foreground line-clamp-2 flex-1">{product.description}</p>
+                  <p className="text-xs text-muted-foreground flex items-center gap-1 mt-2"><MapPin className="h-3 w-3" />{product.seller_location}</p>
                   <div className="flex items-center justify-between mt-3">
                     <span className="font-bold text-sm">{product.currency} {product.price.toLocaleString()}</span>
                     <Button size="icon" variant="outline" className="h-8 w-8"><ShoppingCart className="h-4 w-4" /></Button>

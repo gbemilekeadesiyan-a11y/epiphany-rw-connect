@@ -9,15 +9,6 @@ import AppHeader from "@/components/AppHeader";
 import BottomNav from "@/components/BottomNav";
 import { BookOpen, TrendingUp, Plane, Briefcase, RefreshCw, Clock, User } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import articlesFallback from "@/assets/section-articles.jpg";
-import travelFallback from "@/assets/section-tourism.jpg";
-import businessFallback from "@/assets/ai-pattern.jpg";
-
-const fallbackByCategory: Record<string, string> = {
-  News: articlesFallback,
-  Travel: travelFallback,
-  Business: businessFallback,
-};
 
 interface Article {
   id: string;
@@ -237,18 +228,20 @@ const Articles = () => {
             {/* Featured Article */}
             {featuredArticle && !selectedCategory && (
               <Card 
-                className="overflow-hidden mb-6 cursor-pointer hover:shadow-lg transition-all group"
+                className="overflow-hidden mb-6 cursor-pointer hover:shadow-lg transition-all group border-l-4 border-l-primary"
                 onClick={() => setSelectedArticle(featuredArticle)}
               >
-                <div className="relative h-56 overflow-hidden">
-                  <img
-                    src={featuredArticle.image_url || fallbackByCategory[featuredArticle.category] || articlesFallback}
-                    alt={featuredArticle.title}
-                    loading="lazy"
-                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
-                </div>
+                {featuredArticle.image_url && (
+                  <div className="relative h-56 overflow-hidden">
+                    <img
+                      src={featuredArticle.image_url}
+                      alt={featuredArticle.title}
+                      loading="lazy"
+                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
+                  </div>
+                )}
                 <CardContent className="p-5">
                   <Badge className={`mb-3 ${categoryColors[featuredArticle.category]}`}>
                     {featuredArticle.category}
@@ -256,7 +249,7 @@ const Articles = () => {
                   <h2 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors line-clamp-2">
                     {featuredArticle.title}
                   </h2>
-                  <p className="text-muted-foreground text-sm line-clamp-2">
+                  <p className="text-muted-foreground text-sm line-clamp-3">
                     {featuredArticle.summary}
                   </p>
                   <div className="flex items-center gap-3 mt-4 text-xs text-muted-foreground">
@@ -279,14 +272,18 @@ const Articles = () => {
                     onClick={() => setSelectedArticle(article)}
                   >
                     <CardContent className="p-4 flex gap-4">
-                      <div className="w-24 h-24 rounded-xl overflow-hidden flex-shrink-0 relative">
-                        <img
-                          src={article.image_url || fallbackByCategory[article.category] || articlesFallback}
-                          alt={article.title}
-                          loading="lazy"
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                        />
-                      </div>
+                      {article.image_url ? (
+                        <div className="w-24 h-24 rounded-xl overflow-hidden flex-shrink-0 relative">
+                          <img
+                            src={article.image_url}
+                            alt={article.title}
+                            loading="lazy"
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                          />
+                        </div>
+                      ) : (
+                        <div className="w-1.5 rounded-full bg-primary/40 flex-shrink-0" />
+                      )}
                       <div className="flex-1 min-w-0">
                         <Badge className={`mb-2 text-xs ${categoryColors[article.category]}`}>
                           {article.category}
@@ -294,8 +291,13 @@ const Articles = () => {
                         <h3 className="font-semibold text-sm line-clamp-2 group-hover:text-primary transition-colors">
                           {article.title}
                         </h3>
-                        <p className="text-xs text-muted-foreground mt-1">
-                          {new Date(article.published_at).toLocaleDateString()}
+                        {!article.image_url && article.summary && (
+                          <p className="text-xs text-muted-foreground line-clamp-2 mt-1">{article.summary}</p>
+                        )}
+                        <p className="text-xs text-muted-foreground mt-1 flex items-center gap-2">
+                          <span>{article.author}</span>
+                          <span>·</span>
+                          <span>{new Date(article.published_at).toLocaleDateString()}</span>
                         </p>
                       </div>
                     </CardContent>
