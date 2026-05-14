@@ -9,7 +9,7 @@ import AppHeader from "@/components/AppHeader";
 import BottomNav from "@/components/BottomNav";
 import { Calendar, MapPin, Ticket, RefreshCw, Clock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import eventsBanner from "@/assets/section-events.jpg";
+import eventsBanner from "@/assets/photos/events-rwanda.jpg";
 
 interface Event {
   id: string;
