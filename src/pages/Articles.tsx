@@ -19,7 +19,18 @@ interface Article {
   author: string;
   image_url: string | null;
   published_at: string;
+  source_url?: string | null;
 }
+
+const isValidUrl = (u?: string | null): u is string => {
+  if (!u) return false;
+  try {
+    const url = new URL(u);
+    return url.protocol === "http:" || url.protocol === "https:";
+  } catch {
+    return false;
+  }
+};
 
 const categoryIcons: Record<string, any> = {
   "News": TrendingUp,
@@ -137,13 +148,18 @@ const Articles = () => {
             </div>
           </div>
 
-          <Button
-            variant="outline"
-            className="mt-8"
-            onClick={() => setSelectedArticle(null)}
-          >
-            ← Back to Articles
-          </Button>
+          <div className="flex flex-wrap gap-3 mt-8">
+            <Button variant="outline" onClick={() => setSelectedArticle(null)}>
+              ← Back to Articles
+            </Button>
+            {isValidUrl(selectedArticle.source_url) && (
+              <Button asChild>
+                <a href={selectedArticle.source_url!} target="_blank" rel="noopener noreferrer">
+                  Read original ↗
+                </a>
+              </Button>
+            )}
+          </div>
         </main>
 
         <BottomNav />

@@ -1,0 +1,16 @@
+{
+  "name": "Epiphany — Rwanda's Intelligence Engine",
+  "short_name": "Epiphany",
+  "description": "Tourism, marketplace, events, and articles — all updated in real time by AI. Made for Rwanda.",
+  "start_url": "/app",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0b1736",
+  "theme_color": "#0b1736",
+  "categories": ["travel", "lifestyle", "shopping", "news"],
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+  ]
+}
