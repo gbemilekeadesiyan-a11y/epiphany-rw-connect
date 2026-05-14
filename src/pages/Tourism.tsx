@@ -145,7 +145,11 @@ const Tourism = () => {
                 <p className="text-xs text-muted-foreground">Build a custom itinerary</p>
               </div>
             </div>
-            <Button size="sm" className="bg-gold text-gold-foreground hover:bg-gold/90">
+            <Button
+              size="sm"
+              className="bg-gold text-gold-foreground hover:bg-gold/90"
+              onClick={() => navigate("/events")}
+            >
               Start Planning
             </Button>
           </div>
@@ -180,8 +184,10 @@ const Tourism = () => {
               { name: "Radisson Blu Hotel Kigali", rating: 4.8, price: "RWF 180,000", amenities: "Pool • Spa • Restaurant" },
               { name: "Kigali Marriott Hotel", rating: 4.9, price: "RWF 200,000", amenities: "Gym • Bar • Conference" },
               { name: "Kigali Serena Hotel", rating: 4.7, price: "RWF 175,000", amenities: "Garden • WiFi • Parking" },
-            ].map((hotel, index) => (
-              <Card key={index} className="p-4 hover:shadow-lg transition-all cursor-pointer">
+            ].map((hotel, index) => {
+              const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${hotel.name} Kigali Rwanda`)}`;
+              return (
+              <Card key={index} className="p-4 hover:shadow-lg transition-all">
                 <div className="flex items-center justify-between mb-2">
                   <h3 className="font-semibold">{hotel.name}</h3>
                   <div className="flex items-center gap-1">
@@ -192,10 +198,13 @@ const Tourism = () => {
                 <p className="text-xs text-muted-foreground mb-3">{hotel.amenities}</p>
                 <div className="flex items-center justify-between">
                   <span className="font-semibold text-primary">{hotel.price}/night</span>
-                  <Button size="sm">Book Now</Button>
+                  <Button asChild size="sm">
+                    <a href={mapsUrl} target="_blank" rel="noopener noreferrer">View on Map</a>
+                  </Button>
                 </div>
               </Card>
-            ))}
+              );
+            })}
           </div>
         </div>
 
@@ -244,8 +253,14 @@ const Tourism = () => {
 
                     <div className="flex items-center justify-between">
                       <span className="font-semibold text-primary">{experience.price}</span>
-                      <Button size="sm" variant="outline" className="h-7">
-                        Book Now
+                      <Button asChild size="sm" variant="outline" className="h-7">
+                        <a
+                          href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${experience.title} Rwanda`)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          View on Map
+                        </a>
                       </Button>
                     </div>
                   </div>
