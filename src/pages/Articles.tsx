@@ -272,14 +272,18 @@ const Articles = () => {
                     onClick={() => setSelectedArticle(article)}
                   >
                     <CardContent className="p-4 flex gap-4">
-                      <div className="w-24 h-24 rounded-xl overflow-hidden flex-shrink-0 relative">
-                        <img
-                          src={article.image_url || fallbackByCategory[article.category] || articlesFallback}
-                          alt={article.title}
-                          loading="lazy"
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                        />
-                      </div>
+                      {article.image_url ? (
+                        <div className="w-24 h-24 rounded-xl overflow-hidden flex-shrink-0 relative">
+                          <img
+                            src={article.image_url}
+                            alt={article.title}
+                            loading="lazy"
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                          />
+                        </div>
+                      ) : (
+                        <div className="w-1.5 rounded-full bg-primary/40 flex-shrink-0" />
+                      )}
                       <div className="flex-1 min-w-0">
                         <Badge className={`mb-2 text-xs ${categoryColors[article.category]}`}>
                           {article.category}
@@ -287,8 +291,13 @@ const Articles = () => {
                         <h3 className="font-semibold text-sm line-clamp-2 group-hover:text-primary transition-colors">
                           {article.title}
                         </h3>
-                        <p className="text-xs text-muted-foreground mt-1">
-                          {new Date(article.published_at).toLocaleDateString()}
+                        {!article.image_url && article.summary && (
+                          <p className="text-xs text-muted-foreground line-clamp-2 mt-1">{article.summary}</p>
+                        )}
+                        <p className="text-xs text-muted-foreground mt-1 flex items-center gap-2">
+                          <span>{article.author}</span>
+                          <span>·</span>
+                          <span>{new Date(article.published_at).toLocaleDateString()}</span>
                         </p>
                       </div>
                     </CardContent>
