@@ -228,18 +228,20 @@ const Articles = () => {
             {/* Featured Article */}
             {featuredArticle && !selectedCategory && (
               <Card 
-                className="overflow-hidden mb-6 cursor-pointer hover:shadow-lg transition-all group"
+                className="overflow-hidden mb-6 cursor-pointer hover:shadow-lg transition-all group border-l-4 border-l-primary"
                 onClick={() => setSelectedArticle(featuredArticle)}
               >
-                <div className="relative h-56 overflow-hidden">
-                  <img
-                    src={featuredArticle.image_url || fallbackByCategory[featuredArticle.category] || articlesFallback}
-                    alt={featuredArticle.title}
-                    loading="lazy"
-                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
-                </div>
+                {featuredArticle.image_url && (
+                  <div className="relative h-56 overflow-hidden">
+                    <img
+                      src={featuredArticle.image_url}
+                      alt={featuredArticle.title}
+                      loading="lazy"
+                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
+                  </div>
+                )}
                 <CardContent className="p-5">
                   <Badge className={`mb-3 ${categoryColors[featuredArticle.category]}`}>
                     {featuredArticle.category}
@@ -247,7 +249,7 @@ const Articles = () => {
                   <h2 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors line-clamp-2">
                     {featuredArticle.title}
                   </h2>
-                  <p className="text-muted-foreground text-sm line-clamp-2">
+                  <p className="text-muted-foreground text-sm line-clamp-3">
                     {featuredArticle.summary}
                   </p>
                   <div className="flex items-center gap-3 mt-4 text-xs text-muted-foreground">
