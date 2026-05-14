@@ -21,7 +21,22 @@ interface Event {
   price: string;
   category: string;
   is_featured: boolean;
+  source_url?: string | null;
+  image_url?: string | null;
 }
+
+const isValidUrl = (u?: string | null): u is string => {
+  if (!u) return false;
+  try {
+    const url = new URL(u);
+    return url.protocol === "http:" || url.protocol === "https:";
+  } catch {
+    return false;
+  }
+};
+
+const mapsUrl = (q: string) =>
+  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
 
 const categoryColors: Record<string, string> = {
   "Music": "bg-pink-500/10 text-pink-700 dark:text-pink-400",
@@ -123,10 +138,31 @@ const Events = () => {
                     <div className="flex-1 min-w-0">
                       <Badge className={`mb-1 text-xs ${categoryColors[event.category] || ""}`}>{event.category}</Badge>
                       <h3 className="font-semibold line-clamp-1">{event.title}</h3>
-                      <p className="text-xs text-muted-foreground flex items-center gap-1 mt-1"><MapPin className="h-3 w-3" />{event.venue}</p>
+                      <a
+                        href={mapsUrl(`${event.venue || ""} ${event.location || "Rwanda"}`)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs text-muted-foreground flex items-center gap-1 mt-1 hover:text-primary transition-colors"
+                      >
+                        <MapPin className="h-3 w-3" />{event.venue || event.location}
+                      </a>
                       <div className="flex items-center justify-between mt-2">
                         <span className="text-sm font-semibold">{event.price}</span>
-                        <Button size="sm" variant="outline" className="h-7 text-xs gap-1"><Ticket className="h-3 w-3" />Book</Button>
+                        <Button
+                          asChild
+                          size="sm"
+                          variant="outline"
+                          className="h-7 text-xs gap-1"
+                        >
+                          <a
+                            href={isValidUrl(event.source_url) ? event.source_url! : mapsUrl(`${event.venue || ""} ${event.location || "Rwanda"}`)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <Ticket className="h-3 w-3" />
+                            {isValidUrl(event.source_url) ? "Book" : "Directions"}
+                          </a>
+                        </Button>
                       </div>
                     </div>
                   </CardContent>

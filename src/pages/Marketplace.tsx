@@ -20,7 +20,19 @@ interface Product {
   category: string;
   seller_name: string;
   seller_location: string;
+  source_url?: string | null;
+  image_url?: string | null;
 }
+
+const isValidUrl = (u?: string | null): u is string => {
+  if (!u) return false;
+  try {
+    const url = new URL(u);
+    return url.protocol === "http:" || url.protocol === "https:";
+  } catch {
+    return false;
+  }
+};
 
 const categoryColors: Record<string, string> = {
   "Crafts": "bg-amber-500/10 text-amber-700",
@@ -105,25 +117,34 @@ const Marketplace = () => {
           </Card>
         ) : (
           <div className="grid grid-cols-2 gap-3">
-            {filteredProducts.map((product) => (
+            {filteredProducts.map((product) => {
+              const buyUrl = isValidUrl(product.source_url)
+                ? product.source_url!
+                : `https://www.google.com/search?q=${encodeURIComponent(`${product.name} ${product.seller_name || ""} Rwanda buy`)}`;
+              return (
               <Card key={product.id} className="overflow-hidden hover:shadow-lg hover:border-primary/30 transition-all flex flex-col">
-                <div className="aspect-square relative bg-gradient-to-br from-secondary via-background to-secondary flex items-center justify-center p-4">
-                  <ShoppingBag className="h-10 w-10 text-primary/30 absolute top-3 right-3" />
-                  <div className="text-center">
-                    <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1">{product.category}</p>
-                    <p className="font-bold text-base line-clamp-3 leading-tight">{product.name}</p>
+                <a href={buyUrl} target="_blank" rel="noopener noreferrer" className="block">
+                  <div className="aspect-square relative bg-gradient-to-br from-secondary via-background to-secondary flex items-center justify-center p-4">
+                    <ShoppingBag className="h-10 w-10 text-primary/30 absolute top-3 right-3" />
+                    <div className="text-center">
+                      <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1">{product.category}</p>
+                      <p className="font-bold text-base line-clamp-3 leading-tight">{product.name}</p>
+                    </div>
                   </div>
-                </div>
+                </a>
                 <CardContent className="p-3 flex-1 flex flex-col">
                   <p className="text-xs text-muted-foreground line-clamp-2 flex-1">{product.description}</p>
                   <p className="text-xs text-muted-foreground flex items-center gap-1 mt-2"><MapPin className="h-3 w-3" />{product.seller_location}</p>
                   <div className="flex items-center justify-between mt-3">
                     <span className="font-bold text-sm">{product.currency} {product.price.toLocaleString()}</span>
-                    <Button size="icon" variant="outline" className="h-8 w-8"><ShoppingCart className="h-4 w-4" /></Button>
+                    <Button asChild size="icon" variant="outline" className="h-8 w-8" title={isValidUrl(product.source_url) ? "Buy from seller" : "Find online"}>
+                      <a href={buyUrl} target="_blank" rel="noopener noreferrer"><ShoppingCart className="h-4 w-4" /></a>
+                    </Button>
                   </div>
                 </CardContent>
               </Card>
-            ))}
+              );
+            })}
           </div>
         )}
       </main>
