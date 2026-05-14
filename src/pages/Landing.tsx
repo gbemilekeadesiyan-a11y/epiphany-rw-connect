@@ -14,12 +14,11 @@ import {
 import SiteNav from "@/components/SiteNav";
 import CTAButton from "@/components/CTAButton";
 import EpiphanyLogo from "@/components/EpiphanyLogo";
-import heroImg from "@/assets/landing-hero.jpg";
-import tourismImg from "@/assets/section-tourism.jpg";
-import marketplaceImg from "@/assets/section-marketplace.jpg";
-import eventsImg from "@/assets/section-events.jpg";
-import articlesImg from "@/assets/section-articles.jpg";
-import aiPattern from "@/assets/ai-pattern.jpg";
+import heroImg from "@/assets/photos/hero-kigali.jpg";
+import tourismImg from "@/assets/photos/tourism-rwanda.jpg";
+import marketplaceImg from "@/assets/photos/marketplace-rwanda.jpg";
+import eventsImg from "@/assets/photos/events-rwanda.jpg";
+import articlesImg from "@/assets/photos/articles-rwanda.jpg";
 
 const services = [
   {
