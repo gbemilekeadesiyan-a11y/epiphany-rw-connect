@@ -9,15 +9,6 @@ import AppHeader from "@/components/AppHeader";
 import BottomNav from "@/components/BottomNav";
 import { BookOpen, TrendingUp, Plane, Briefcase, RefreshCw, Clock, User } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import articlesFallback from "@/assets/section-articles.jpg";
-import travelFallback from "@/assets/section-tourism.jpg";
-import businessFallback from "@/assets/ai-pattern.jpg";
-
-const fallbackByCategory: Record<string, string> = {
-  News: articlesFallback,
-  Travel: travelFallback,
-  Business: businessFallback,
-};
 
 interface Article {
   id: string;
