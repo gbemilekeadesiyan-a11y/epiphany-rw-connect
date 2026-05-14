@@ -9,7 +9,7 @@ import AppHeader from "@/components/AppHeader";
 import BottomNav from "@/components/BottomNav";
 import { ShoppingBag, MapPin, RefreshCw, ShoppingCart, Search } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import marketImg from "@/assets/section-marketplace.jpg";
+
 
 interface Product {
   id: string;
